@@ -1,0 +1,19 @@
+place_id,kind,name_en,name_ne,aliases_en,aliases_ne,needs_context,lat,lon,pcode,coord_source,checked_by_hand,notes
+T-dhunche,town,Dhunche,धुन्चे,Dhunchhe,,no,28.11279,85.29606,NP0329402,OSM Nominatim node/10315965426 (suburb),no,Rasuwa district headquarters
+T-syafrubesi,town,Syafrubesi,स्याफ्रुबेसी,Syabrubesi|Syaphrubesi|Syapru Besi|Syabru Besi,स्याब्रुबेसी|स्याफ्रुवेसी,no,28.16457,85.34274,NP0329402,OSM Nominatim node/14127413536 (hamlet),no,Copernicus AOI 01 'Syapru Besi'
+T-timure,town,Timure,टिमुरे,,,no,28.25285,85.36667,NP0329402,OSM Nominatim node/2553894641 (suburb),no,Copernicus AOI 02
+T-rasuwagadhi,town,Rasuwagadhi,रसुवागढी,Rasuwa Gadhi|Rasuwagadi,,no,28.27777,85.37778,NP0329402,OSM Nominatim node/992955542 (hamlet),no,border crossing to Kerung/Gyirong
+T-betrawati,town,Betrawati,बेत्रावती,,,no,27.97311,85.18595,NP0328301,OSM Nominatim node/268864226 (hamlet),no,Nuwakot/Rasuwa border; check which side
+T-mailung,town,Mailung,मैलुङ,,,no,28.07177,85.20700,NP0329403,OSM Nominatim node/3415533959 (hamlet),no,Mailung Khola hydropower area
+T-chilime,town,Chilime,चिलिमे,,,no,28.18362,85.30224,NP0329401,OSM Nominatim node/13242877444 (suburb),no,Chilime hydropower
+T-trishuli-bazar,town,Trishuli Bazar,त्रिशूली बजार,Trisuli Bazar|Battar,त्रिशुली बजार|बट्टार,no,27.92181,85.14781,NP0328301,OSM Nominatim way/533183934 (tertiary),no,the town of Bidur municipality
+T-devighat,town,Devighat,देवीघाट,,,yes,27.86003,85.11006,NP0328301,OSM Nominatim node/4156044161 (hamlet),no,Nuwakot; not Devghat (Tanahun)
+T-benighat,town,Benighat,बेनीघाट,,,no,27.78347,84.79512,NP0330408,OSM Nominatim node/4941656353 (suburb),no,Dhading
+T-malekhu,town,Malekhu,मलेखु,,,no,27.81370,84.82724,NP0330408,OSM Nominatim node/3013890962 (hamlet),no,Dhading
+T-mugling,town,Mugling,मुग्लिन,Muglin,मुग्लिङ,no,27.85677,84.56188,NP0335401,OSM Nominatim node/1624368761 (bus_stop),no,Chitwan/Gorkha/Tanahun junction
+T-kurintar,town,Kurintar,कुरिनटार,,,no,27.87243,84.62281,NP0335401,OSM Nominatim node/279339376 (hamlet),no,Chitwan
+T-fishling,town,Fishling,फिस्लिङ,,,no,27.84249,84.66148,NP0335401,OSM Nominatim node/9794119187 (school),no,Chitwan
+T-narayangadh,town,Narayangadh,नारायणगढ,Narayanghat|Narayangarh,,no,27.69562,84.42320,NP0335101,OSM Nominatim node/2628445549 (suburb),no,part of Bharatpur
+L-langtang,landmark,Langtang,लाङटाङ,Langtang Valley,लाङ्टाङ,yes,,,NP0329,district-level landmark,no,"valley, village, park and peak; counted for Rasuwa district only"
+R-trishuli,river,Trishuli,त्रिशूली,Trisuli|Trishuli River,त्रिशुली,no,,,CORRIDOR,river (no point),no,the river; the town is Trishuli Bazar
+R-bhotekoshi,river,Bhote Koshi,भोटेकोशी,Bhotekoshi|Bhote Kosi,भोटेकोसी|भोटे कोशी,yes,,,CORRIDOR,river (no point),no,a second Bhote Koshi flows through Sindhupalchok

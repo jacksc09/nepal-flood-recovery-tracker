@@ -1,0 +1,103 @@
+place_id,kind,pcode,parent_pcode,name_en,name_ne,aliases_en,aliases_ne,lat,lon,corridor_role,needs_context,ne_source,notes
+NP03,province,NP03,NP,Bagmati,बाग्मती,Bagmati Province,बागमती,27.65266,85.39297,province,no,auto (name and location agree),BIPAD spells it बाग्मती; news often बागमती
+NP04,province,NP04,NP,Gandaki,गण्डकी,Gandaki Province,,28.38439,84.03585,province,no,auto (name and location agree),
+NP05,province,NP05,NP,Lumbini,लुम्बिनी,Lumbini Province,,28.09955,82.52200,province,no,auto (name and location agree),
+NP0328,district,NP0328,NP03,Nuwakot,नुवाकोट,,,27.92579,85.24849,core,no,auto (name and location agree),
+NP0329,district,NP0329,NP03,Rasuwa,रसुवा,,,28.17560,85.47905,core,no,auto (name and location agree),
+NP0330,district,NP0330,NP03,Dhading,धादिङ्ग,,धादिङ,28.00777,84.90648,core,no,auto (name and location agree),BIPAD spells it धादिङ्ग; news usually धादिङ (prefix match then covers both)
+NP0335,district,NP0335,NP03,Chitawan,चितवन,Chitwan,,27.61789,84.45306,downstream,no,override (NOT yet checked by hand),COD spells it Chitawan
+NP0436,district,NP0436,NP04,Gorkha,गोरखा,,,28.27358,84.84068,downstream,no,auto (name and location agree),
+NP0440,district,NP0440,NP04,Tanahu,तनहुँ,Tanahun,तनहुं,27.93541,84.22313,downstream,no,auto (name and location agree),COD/BIPAD spell it Tanahu/तनहुँ
+NP0447,district,NP0447,NP04,Nawalparasi East,नवलपरासी (बर्दघाट सुस्ता पूर्व),Nawalpur|Nawalparasi (Bardaghat Susta East)|Nawalparasi,नवलपुर|नवलपरासी पूर्व|नवलपरासी,27.65375,84.03070,downstream,no,auto (name and location agree),"plain 'Nawalparasi' is shared with NP0547, so it only resolves when East/West is clear"
+NP0547,district,NP0547,NP05,Nawalparasi West,नवलपरासी (बर्दघाट सुस्ता पश्चिम),Nawalparasi (Bardaghat Susta West)|Nawalparasi,नवलपरासी पश्चिम|नवलपरासी,27.51989,83.73680,downstream,no,auto (name and location agree),plain 'Nawalparasi' is shared with NP0447
+NP0328301,municipality,NP0328301,NP0328,Bidur,विदुर,,बिदुर,27.91943,85.13055,core,no,auto (name and location agree),BIPAD spells it विदुर
+NP0328302,municipality,NP0328302,NP0328,Belkotgadhi,बेलकोटगढी,,,27.82584,85.10910,core,no,auto (name and location agree),
+NP0328401,municipality,NP0328401,NP0328,Myagang,म्यागङ,Meghang,,27.99571,85.07214,core,no,override (NOT yet checked by hand),
+NP0328402,municipality,NP0328402,NP0328,Kispang,किस्पाङ,,,28.03472,85.10303,core,no,auto (name and location agree),
+NP0328403,municipality,NP0328403,NP0328,Tarakeshwor,तारकेश्वर,Tarkeshwar,तार्केश्वर,27.88250,85.03694,core,yes,override (NOT yet checked by hand),a second Tarakeshwar municipality is in Kathmandu district
+NP0328404,municipality,NP0328404,NP0328,Suryagadhi,सूर्यगढी,,,27.94639,85.23556,core,no,auto (name and location agree),
+NP0328405,municipality,NP0328405,NP0328,Tadi,तादी,,,27.96573,85.33818,core,yes,auto (name and location agree),Tadi is also a river (Tadi Khola)
+NP0328406,municipality,NP0328406,NP0328,Likhu,लिखु,,,27.88729,85.21634,core,yes,auto (name and location agree),Likhu is also a river and a name used in other districts
+NP0328407,municipality,NP0328407,NP0328,Panchakanya,पञ्चकन्या,,,27.89133,85.30118,core,yes,auto (name and location agree),Panchakanya is used in several districts
+NP0328408,municipality,NP0328408,NP0328,Dupcheshwor,दुप्चेश्वर,Dupcheshwar,,27.94761,85.42535,core,no,override (NOT yet checked by hand),
+NP0328409,municipality,NP0328409,NP0328,Kakani,ककनी,,,27.82226,85.24398,core,yes,auto (name and location agree),Kakani is also a hill/pass name
+NP0328410,municipality,NP0328410,NP0328,Shivapuri,शिवपुरी,,,27.85398,85.36768,core,yes,auto (name and location agree),Shivapuri is also the national park and hills north of Kathmandu
+NP0329401,municipality,NP0329401,NP0329,Aamachhodingmo,आमाछोदिङमो,Amachhodingmo|Aamachodingmo,आमाछोदिङ्मो,28.21612,85.25326,core,no,auto (name and location agree),
+NP0329402,municipality,NP0329402,NP0329,Gosaikunda,गोसाईकुण्ड,Gosainkunda|Gosaikund,गोसाइँकुण्ड|गोसाईंकुण्ड|गोसाइकुण्ड|गोसाइँकुन्ड,28.21167,85.54386,core,no,auto (name and location agree),
+NP0329403,municipality,NP0329403,NP0329,Uttargaya,उत्तरगया,,,28.07091,85.18278,core,no,auto (name and location agree),
+NP0329404,municipality,NP0329404,NP0329,Kalika,कालिका,,,28.02928,85.21658,core,yes,auto (name and location agree),Kalika is also a municipality in Chitwan (NP0335301) and a goddess
+NP0329405,municipality,NP0329405,NP0329,Naukunda,नौकुण्ड,,,28.01901,85.30097,core,no,auto (name and location agree),
+NP0330301,municipality,NP0330301,NP0330,Nilkhantha,नीलकण्ठ,Neelakantha|Nilkantha,,27.91894,84.92968,core,yes,override (NOT yet checked by hand),Nilkantha is a name of Shiva and of temples
+NP0330302,municipality,NP0330302,NP0330,Dhunibenshi,धुनिवेशी,Dhunibeshi,,27.72287,85.16919,core,no,override (NOT yet checked by hand),
+NP0330401,municipality,NP0330401,NP0330,Rubi Valley,रुवी भ्याली,Ruby Valley,,28.22618,85.08238,core,no,override (NOT yet checked by hand),
+NP0330402,municipality,NP0330402,NP0330,Ganga Jamuna,गङ्गाजमुना,Gangajamuna,,28.09098,84.92110,core,yes,auto (name and location agree),Ganga Jamuna is a religious name used widely
+NP0330403,municipality,NP0330403,NP0330,Khaniyabas,खनियाबास,Khaniyabash,,28.08257,85.05897,core,no,override (NOT yet checked by hand),
+NP0330404,municipality,NP0330404,NP0330,Tripurasundari,त्रिपुरासुन्दरी,,,28.01854,84.86827,core,yes,auto (name and location agree),Tripurasundari is also a rural municipality in Sindhupalchok
+NP0330405,municipality,NP0330405,NP0330,Netrawati Dabjong,नेत्रावती डबजोङ,,,27.98873,84.97240,core,no,auto (name and location agree),
+NP0330406,municipality,NP0330406,NP0330,Jwalamukhi,ज्वालामूखी,,,27.91912,84.79290,core,yes,auto (name and location agree),Jwalamukhi is also a temple name
+NP0330407,municipality,NP0330407,NP0330,Siddhalek,सिद्धलेक,,,27.84673,84.83660,core,no,auto (name and location agree),
+NP0330408,municipality,NP0330408,NP0330,Benighat Rorang,बेनीघाट रोराङ,,,27.74697,84.75774,core,no,auto (name and location agree),
+NP0330409,municipality,NP0330409,NP0330,Gajuri,गजुरी,,,27.75033,84.89696,core,no,auto (name and location agree),
+NP0330410,municipality,NP0330410,NP0330,Galchhi,गल्छी,Galchi,,27.77908,84.98729,core,no,override (NOT yet checked by hand),
+NP0330411,municipality,NP0330411,NP0330,Thakre,थाक्रे,,,27.73705,85.06351,core,no,auto (name and location agree),
+NP0335101,municipality,NP0335101,NP0335,Bharatpur,भरतपुर,,,27.68777,84.43339,downstream,no,auto (name and location agree),
+NP0335301,municipality,NP0335301,NP0335,Kalika,कालिका,,,27.71456,84.59550,downstream,yes,auto (name and location agree),Kalika is also a rural municipality in Rasuwa (NP0329404)
+NP0335302,municipality,NP0335302,NP0335,Ratnanagar,रत्ननगर,,,27.61508,84.51054,downstream,no,auto (name and location agree),
+NP0335303,municipality,NP0335303,NP0335,Khairahani,खैरहनी,,,27.61622,84.56627,downstream,no,auto (name and location agree),
+NP0335304,municipality,NP0335304,NP0335,Rapti,राप्ती,,,27.64967,84.66127,downstream,yes,auto (name and location agree),Rapti is also a river and a former zone
+NP0335305,municipality,NP0335305,NP0335,Madi,माडी,,,27.43438,84.35253,downstream,yes,auto (name and location agree),Madi is also a river and a municipality in Kaski
+NP0335401,municipality,NP0335401,NP0335,Ichchha Kamana,इच्छाकामना,Ichchhakamana,,27.80395,84.57708,downstream,no,auto (name and location agree),
+NP0436301,municipality,NP0436301,NP0436,Palungtar,पालुङटार,,,28.01283,84.51989,downstream,no,auto (name and location agree),
+NP0436302,municipality,NP0436302,NP0436,Gorkha Municipality,गोरखा नगरपालिका,,,27.97745,84.60492,downstream,no,auto (name and location agree),plain 'Gorkha'/'गोरखा' is left to the district/province
+NP0436401,municipality,NP0436401,NP0436,Chumanubri,चुमनुव्री,Chum Nubri,,28.54115,84.87286,downstream,no,override (NOT yet checked by hand),
+NP0436402,municipality,NP0436402,NP0436,Ajirkot,अजिरकोट,,,28.23476,84.68556,downstream,no,auto (name and location agree),
+NP0436403,municipality,NP0436403,NP0436,Barpak Sulikot,बारपाक सुलिकोट,,,28.20645,84.75063,downstream,no,auto (name and location agree),
+NP0436404,municipality,NP0436404,NP0436,Dharche,धार्चे,,,28.31242,84.89564,downstream,no,auto (name and location agree),
+NP0436405,municipality,NP0436405,NP0436,Siranchowk,सिरानचोक,Siranchok,,28.08569,84.58574,downstream,no,override (NOT yet checked by hand),
+NP0436406,municipality,NP0436406,NP0436,Aarughat,आरूघाट,,,28.11923,84.81440,downstream,no,auto (name and location agree),
+NP0436407,municipality,NP0436407,NP0436,Bhimsenthapa,भिमसेनथापा,BhimsenThapa,,28.00161,84.74139,downstream,yes,auto (name and location agree),Bhimsen Thapa is a historical figure
+NP0436408,municipality,NP0436408,NP0436,Shahid Lakhan,शहिद लखन,Sahid Lakhan,,27.92789,84.63900,downstream,yes,override (NOT yet checked by hand),Shahid Lakhan is a person (martyr Lakhan Thapa)
+NP0436409,municipality,NP0436409,NP0436,Gandaki Rural Municipality,गण्डकी गाउँपालिका,,,27.86191,84.69489,downstream,no,auto (name and location agree),plain 'Gandaki'/'गण्डकी' is left to the district/province
+NP0440301,municipality,NP0440301,NP0440,Shuklagandaki,शुक्लागण्डकी,,,28.06118,84.04491,downstream,no,auto (name and location agree),
+NP0440302,municipality,NP0440302,NP0440,Byas,व्यास,Vyas,,28.00057,84.28853,downstream,yes,override (NOT yet checked by hand),व्यास also means diameter and the sage Vyasa
+NP0440303,municipality,NP0440303,NP0440,Bhanu,भानु,,,28.04091,84.40510,downstream,yes,auto (name and location agree),भानु prefixes Bhanubhakta (the poet)
+NP0440304,municipality,NP0440304,NP0440,Bhimad,भिमाद,,,27.96314,84.06402,downstream,no,auto (name and location agree),
+NP0440401,municipality,NP0440401,NP0440,Myagde,म्याग्दे,,,28.00741,84.15367,downstream,no,auto (name and location agree),
+NP0440402,municipality,NP0440402,NP0440,Ghiring,घिरिङ,,,27.89883,84.04448,downstream,no,auto (name and location agree),
+NP0440403,municipality,NP0440403,NP0440,Rhishing,ऋषिङ्ग,,,27.90074,84.22578,downstream,no,auto (name and location agree),
+NP0440404,municipality,NP0440404,NP0440,Bandipur,बन्दिपुर,,,27.91840,84.39402,downstream,no,auto (name and location agree),
+NP0440405,municipality,NP0440405,NP0440,Aanbu Khaireni,आँबूखैरेनी,Aanbookhaireni,,27.87955,84.47708,downstream,no,override (NOT yet checked by hand),
+NP0440406,municipality,NP0440406,NP0440,Devghat,देवघाट,,,27.81076,84.36702,downstream,yes,auto (name and location agree),Devghat is also a pilgrimage site name; Devighat (Nuwakot) is different
+NP0447301,municipality,NP0447301,NP0447,Madhya Bindu,मध्यविन्दु,Madhyabindu,,27.63502,83.98647,downstream,yes,auto (name and location agree),मध्यविन्दु means midpoint
+NP0447302,municipality,NP0447302,NP0447,Kawasoti,कावासोती,,,27.65135,84.14359,downstream,no,auto (name and location agree),
+NP0447303,municipality,NP0447303,NP0447,Devchuli,देवचुली,,,27.71381,84.19935,downstream,no,auto (name and location agree),
+NP0447304,municipality,NP0447304,NP0447,Gaidakot,गैंडाकोट,,,27.73279,84.33950,downstream,no,auto (name and location agree),
+NP0447401,municipality,NP0447401,NP0447,Baudikali,बौदीकाली,,,27.81687,84.06190,downstream,yes,auto (name and location agree),Baudikali is also a temple name
+NP0447402,municipality,NP0447402,NP0447,Bulingtar,बुलिङटार,,,27.80650,84.20342,downstream,no,auto (name and location agree),
+NP0447403,municipality,NP0447403,NP0447,Hupsekot,हुप्सेकोट,,,27.70122,84.06320,downstream,no,auto (name and location agree),
+NP0447404,municipality,NP0447404,NP0447,Binayi Tribeni,विनयी-त्रिवेणी,Binayee Tribeni,,27.63175,83.86053,downstream,no,override (NOT yet checked by hand),
+NP0547301,municipality,NP0547301,NP0547,Sunawal,सुनवल,Sunwal,,27.61677,83.66423,downstream,no,override (NOT yet checked by hand),
+NP0547302,municipality,NP0547302,NP0547,Bardaghat,बर्दघाट,,,27.56992,83.79330,downstream,no,auto (name and location agree),
+NP0547303,municipality,NP0547303,NP0547,Ramgram,रामग्राम,,,27.52707,83.64797,downstream,yes,auto (name and location agree),Ramgram is also a historic site name
+NP0547401,municipality,NP0547401,NP0547,Palhinandan,पाल्हीनन्दन,Palhi Nandan,,27.46421,83.66787,downstream,no,auto (name and location agree),
+NP0547402,municipality,NP0547402,NP0547,Sarawal,सरावल,,,27.50908,83.72641,downstream,no,auto (name and location agree),
+NP0547403,municipality,NP0547403,NP0547,Pratapapur,प्रतापपुर,Pratappur,,27.43595,83.79350,downstream,yes,override (NOT yet checked by hand),Pratappur is used in several districts
+NP0547404,municipality,NP0547404,NP0547,Susta,सुस्ता,,,27.42826,83.84319,downstream,yes,auto (name and location agree),Susta is also the Susta border dispute area
+T-dhunche,town,NP0329402,NP0329,Dhunche,धुन्चे,Dhunchhe,,28.11279,85.29606,core,no,towns.csv (NOT yet checked by hand),Rasuwa district headquarters
+T-syafrubesi,town,NP0329402,NP0329,Syafrubesi,स्याफ्रुबेसी,Syabrubesi|Syaphrubesi|Syapru Besi|Syabru Besi,स्याब्रुबेसी|स्याफ्रुवेसी,28.16457,85.34274,core,no,towns.csv (NOT yet checked by hand),Copernicus AOI 01 'Syapru Besi'
+T-timure,town,NP0329402,NP0329,Timure,टिमुरे,,,28.25285,85.36667,core,no,towns.csv (NOT yet checked by hand),Copernicus AOI 02
+T-rasuwagadhi,town,NP0329402,NP0329,Rasuwagadhi,रसुवागढी,Rasuwa Gadhi|Rasuwagadi,,28.27777,85.37778,core,no,towns.csv (NOT yet checked by hand),border crossing to Kerung/Gyirong
+T-betrawati,town,NP0328301,NP0328,Betrawati,बेत्रावती,,,27.97311,85.18595,core,no,towns.csv (NOT yet checked by hand),Nuwakot/Rasuwa border; check which side
+T-mailung,town,NP0329403,NP0329,Mailung,मैलुङ,,,28.07177,85.20700,core,no,towns.csv (NOT yet checked by hand),Mailung Khola hydropower area
+T-chilime,town,NP0329401,NP0329,Chilime,चिलिमे,,,28.18362,85.30224,core,no,towns.csv (NOT yet checked by hand),Chilime hydropower
+T-trishuli-bazar,town,NP0328301,NP0328,Trishuli Bazar,त्रिशूली बजार,Trisuli Bazar|Battar,त्रिशुली बजार|बट्टार,27.92181,85.14781,core,no,towns.csv (NOT yet checked by hand),the town of Bidur municipality
+T-devighat,town,NP0328301,NP0328,Devighat,देवीघाट,,,27.86003,85.11006,core,yes,towns.csv (NOT yet checked by hand),Nuwakot; not Devghat (Tanahun)
+T-benighat,town,NP0330408,NP0330,Benighat,बेनीघाट,,,27.78347,84.79512,core,no,towns.csv (NOT yet checked by hand),Dhading
+T-malekhu,town,NP0330408,NP0330,Malekhu,मलेखु,,,27.81370,84.82724,core,no,towns.csv (NOT yet checked by hand),Dhading
+T-mugling,town,NP0335401,NP0335,Mugling,मुग्लिन,Muglin,मुग्लिङ,27.85677,84.56188,downstream,no,towns.csv (NOT yet checked by hand),Chitwan/Gorkha/Tanahun junction
+T-kurintar,town,NP0335401,NP0335,Kurintar,कुरिनटार,,,27.87243,84.62281,downstream,no,towns.csv (NOT yet checked by hand),Chitwan
+T-fishling,town,NP0335401,NP0335,Fishling,फिस्लिङ,,,27.84249,84.66148,downstream,no,towns.csv (NOT yet checked by hand),Chitwan
+T-narayangadh,town,NP0335101,NP0335,Narayangadh,नारायणगढ,Narayanghat|Narayangarh,,27.69562,84.42320,downstream,no,towns.csv (NOT yet checked by hand),part of Bharatpur
+L-langtang,landmark,NP0329,NP0329,Langtang,लाङटाङ,Langtang Valley,लाङ्टाङ,,,core,yes,towns.csv (NOT yet checked by hand),"valley, village, park and peak; counted for Rasuwa district only"
+R-trishuli,river,CORRIDOR,,Trishuli,त्रिशूली,Trisuli|Trishuli River,त्रिशुली,,,core,no,towns.csv (NOT yet checked by hand),the river; the town is Trishuli Bazar
+R-bhotekoshi,river,CORRIDOR,,Bhote Koshi,भोटेकोशी,Bhotekoshi|Bhote Kosi,भोटेकोसी|भोटे कोशी,,,core,yes,towns.csv (NOT yet checked by hand),a second Bhote Koshi flows through Sindhupalchok

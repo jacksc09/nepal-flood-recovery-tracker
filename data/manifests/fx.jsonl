@@ -1,0 +1,1 @@
+{"source": "fx", "fetched_at_utc": "2026-10-07T12:42:54Z", "endpoint": "https://www.nrb.org.np/api/forex/v1/rates", "params": {"from": "2026-08-19", "to": "2026-10-07"}, "raw": [{"file": "data/raw/fx/20261007T124254Z/page_1.json", "sha256": "6195db7882a63efe78184ddca331544abd4f784d9cc0f1b9f3e20ee1e7835424", "bytes": 105194}], "run_id": "002244bcd3f36149"}

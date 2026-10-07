@@ -1,0 +1,7 @@
+requests
+tenacity
+pandas
+openpyxl
+shapely
+beautifulsoup4
+lxml

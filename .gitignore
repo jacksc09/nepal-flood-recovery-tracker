@@ -1,0 +1,15 @@
+# Raw downloads: full article text (copyright), API dumps, packets.
+# The committed data/manifests/ record exactly what was fetched (SHA-256).
+data/raw/
+
+# Review working files (queue, save journal, startup backups)
+data/review/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# macOS
+.DS_Store

@@ -1,0 +1,34 @@
+pcode,aliases_en,aliases_ne,needs_context,note
+NP03,,बागमती,no,BIPAD spells it बाग्मती; news often बागमती
+NP0330,,धादिङ,no,BIPAD spells it धादिङ्ग; news usually धादिङ (prefix match then covers both)
+NP0335,Chitwan,,no,COD spells it Chitawan
+NP0440,Tanahun,तनहुं,no,COD/BIPAD spell it Tanahu/तनहुँ
+NP0447,Nawalpur|Nawalparasi East|Nawalparasi (Bardaghat Susta East)|Nawalparasi,नवलपुर|नवलपरासी पूर्व|नवलपरासी,no,"plain 'Nawalparasi' is shared with NP0547, so it only resolves when East/West is clear"
+NP0547,Nawalparasi West|Nawalparasi (Bardaghat Susta West)|Nawalparasi,नवलपरासी पश्चिम|नवलपरासी,no,"plain 'Nawalparasi' is shared with NP0447"
+NP0328301,,बिदुर,no,BIPAD spells it विदुर
+NP0328403,,तार्केश्वर,yes,a second Tarakeshwar municipality is in Kathmandu district
+NP0328405,,,yes,Tadi is also a river (Tadi Khola)
+NP0328406,,,yes,Likhu is also a river and a name used in other districts
+NP0328409,,,yes,Kakani is also a hill/pass name
+NP0328410,,,yes,Shivapuri is also the national park and hills north of Kathmandu
+NP0328407,,,yes,Panchakanya is used in several districts
+NP0329401,Amachhodingmo|Aamachodingmo,आमाछोदिङ्मो,no,
+NP0329402,Gosainkunda|Gosaikund,गोसाइँकुण्ड|गोसाईंकुण्ड|गोसाइकुण्ड|गोसाइँकुन्ड,no,
+NP0329404,,,yes,Kalika is also a municipality in Chitwan (NP0335301) and a goddess
+NP0335301,,,yes,Kalika is also a rural municipality in Rasuwa (NP0329404)
+NP0330301,Nilkantha,नीलकण्ठ,yes,Nilkantha is a name of Shiva and of temples
+NP0330402,,,yes,Ganga Jamuna is a religious name used widely
+NP0330404,,,yes,Tripurasundari is also a rural municipality in Sindhupalchok
+NP0330406,,,yes,Jwalamukhi is also a temple name
+NP0335304,,,yes,Rapti is also a river and a former zone
+NP0335305,,,yes,Madi is also a river and a municipality in Kaski
+NP0436407,,,yes,Bhimsen Thapa is a historical figure
+NP0436408,,,yes,Shahid Lakhan is a person (martyr Lakhan Thapa)
+NP0440302,Vyas,,yes,व्यास also means diameter and the sage Vyasa
+NP0440303,,,yes,भानु prefixes Bhanubhakta (the poet)
+NP0440406,,,yes,Devghat is also a pilgrimage site name; Devighat (Nuwakot) is different
+NP0447301,,,yes,मध्यविन्दु means midpoint
+NP0447401,,,yes,Baudikali is also a temple name
+NP0547303,,,yes,Ramgram is also a historic site name
+NP0547403,,,yes,Pratappur is used in several districts
+NP0547404,,,yes,Susta is also the Susta border dispute area
