@@ -35,6 +35,9 @@ import amounts
     ("1 million US dollars", 1_000_000, "USD"),
     ("अमेरिकी डलर १० लाख", 1_000_000, "USD"),
     ("A$4,269", 4_269, "AUD"),
+    ("५० लाख अष्ट्रेलियन डलर", 5_000_000, "AUD"),   # Nepali spellings vary
+    ("१ लाख क्यानेडियन डलर", 100_000, "CAD"),
+    ("२ लाख अमेरिकन डलर", 200_000, "USD"),
     ("€2 million", 2_000_000, "EUR"),
     ("£1m", 1_000_000, "GBP"),
     ("10 million yuan", 10_000_000, "CNY"),
@@ -42,6 +45,12 @@ import amounts
     ("IRs 5 crore", 50_000_000, "INR"),
     ("भारु ५ करोड", 50_000_000, "INR"),
     ("5 crore Indian rupees", 50_000_000, "INR"),
+    ("nearly 1 million Swiss francs", 1_000_000, "CHF"),
+    ("CHF 250,000", 250_000, "CHF"),
+    # A compound may end in a plain number below its last unit
+    ("५५ लाख ५५ हजार ५५५ रुपैयाँ", 5_555_555, "NPR"),
+    ("४ करोड ५४ लाख १४ हजार ७ सय ८७ रुपियाँ", 45_414_787, "NPR"),
+    ("एक लाख ११ हजार १११ रुपैयाँ", 111_111, "NPR"),
 ])
 def test_parses_value_and_currency(text, value, currency):
     assert amounts.parse_amount(text) == (Decimal(value), currency)
@@ -62,6 +71,14 @@ def test_a_bare_dollar_is_flagged_for_human_confirmation(text, value):
 
 def test_south_asian_units_without_a_currency_are_probably_rupees_but_flagged():
     assert amounts.parse_amount("५ करोड") == (Decimal(50_000_000), "NPR?")
+    assert amounts.parse_amount("१ लाख ११ हजार १ सय ११") == (Decimal(111_111), "NPR?")
+    assert amounts.parse_amount("एक लाख एक हजार १११") == (Decimal(101_111), "NPR?")
+
+
+def test_a_repeated_number_means_each_not_a_range():
+    # "१०–१० हजार" is Nepali for "10 thousand each"
+    assert amounts.parse_amount("१०–१० हजार") == (Decimal(10_000), "NPR?")
+    assert amounts.parse_amount("रु ५/५ लाख") == (Decimal(500_000), "NPR")
     assert amounts.needs_confirmation("NPR?")
     assert not amounts.needs_confirmation("NPR")
 
@@ -76,6 +93,8 @@ def test_south_asian_units_without_a_currency_are_probably_rupees_but_flagged():
     "¥10 million",                    # yen or yuan? can't tell
     "5 thousand",                     # English units, no currency
     "गुरु ५",                          # रु inside a word is not "Rs"
+    "Rs 5 crore 2026",                # a stray year is not part of the amount
+    "५ लाख ५ रुपैयाँ",                 # a plain number may only follow thousands or hundreds
 ])
 def test_refuses_what_it_cannot_parse_with_certainty(text):
     with pytest.raises(amounts.AmountError):

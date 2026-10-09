@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nepal Flood Recovery Tracker</title>
+<meta name="description" content="Where money for recovery from the 26 August 2026 Rasuwa flood is going: OCHA funding, reviewed place-by-place announcements, satellite damage and news, week by week.">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
+  --grid: #e1e0d9; --axis: #c3c2b7; --ring: rgba(11,11,11,0.10);
+  --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100; --s5: #e87ba4;
+  --s1-wash: rgba(42,120,214,0.10); --amber-bg: #fdf3dc; --amber-ink: #6b4a00; --amber-line: #e8c675;
+  --info-bg: #eef4fc; --info-ink: #1c3f6e; --hatch: rgba(137,135,129,0.22);
+}
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #ffffff; --ink-2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --ring: rgba(255,255,255,0.10);
+    --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #d55181;
+    --s1-wash: rgba(57,135,229,0.14); --amber-bg: #33280f; --amber-ink: #f3d58c; --amber-line: #6e5520;
+    --info-bg: #14233a; --info-ink: #b9d3f5; --hatch: rgba(137,135,129,0.25);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface: #1a1a19; --ink: #ffffff; --ink-2: #c3c2b7; --muted: #898781;
+  --grid: #2c2c2a; --axis: #383835; --ring: rgba(255,255,255,0.10);
+  --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #d55181;
+  --s1-wash: rgba(57,135,229,0.14); --amber-bg: #33280f; --amber-ink: #f3d58c; --amber-line: #6e5520;
+  --info-bg: #14233a; --info-ink: #b9d3f5; --hatch: rgba(137,135,129,0.25);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--page); color: var(--ink);
+  font: 15px/1.5 system-ui, -apple-system, "Segoe UI", "Noto Sans Devanagari", sans-serif; }
+a { color: var(--s1); }
+button, select, input { font: inherit; color: inherit; }
+header { padding: 14px 16px 10px; background: var(--surface); border-bottom: 1px solid var(--grid); }
+.title-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; }
+h1 { font-size: 20px; margin: 0; letter-spacing: -0.01em; }
+.sub { color: var(--ink-2); font-size: 14px; }
+.controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin-top: 10px; }
+.control { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--ink-2); }
+.control select, .btn { border: 1px solid var(--axis); background: var(--surface); border-radius: 7px;
+  padding: 5px 9px; cursor: pointer; }
+.btn:hover, .control select:hover { border-color: var(--muted); }
+#week-range { width: 260px; accent-color: var(--s1); cursor: grab; }
+#week-range:active { cursor: grabbing; }
+#week-dates { min-width: 9.5em; }
+svg#chart-money, svg#chart-news { touch-action: pan-y; cursor: ew-resize; }
+#week-select { max-width: 100%; }
+.week-step { padding: 4px 9px; }
+.banners { padding: 0 16px; }
+.banner { margin: 10px 0 0; padding: 9px 12px; border-radius: 8px; font-size: 14px; border: 1px solid; }
+.banner.preview { background: var(--info-bg); color: var(--info-ink); border-color: transparent; }
+.banner.recon { color: var(--amber-ink); border-color: var(--amber-line);
+  background: repeating-linear-gradient(45deg, var(--amber-bg) 0 10px, transparent 10px 12px), var(--amber-bg); }
+.banner.open { background: var(--surface); color: var(--ink-2); border-color: var(--grid); }
+main { display: grid; grid-template-columns: minmax(0, 1fr) 400px; gap: 14px; padding: 12px 16px; }
+#map { height: 68vh; min-height: 420px; border-radius: 10px; border: 1px solid var(--grid); background: var(--surface); }
+#panel { background: var(--surface); border: 1px solid var(--grid); border-radius: 10px; padding: 14px 16px;
+  height: 68vh; min-height: 420px; overflow-y: auto; }
+#panel h2 { font-size: 17px; margin: 0 0 2px; }
+#panel h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-2);
+  margin: 18px 0 6px; font-weight: 600; }
+.ne { color: var(--ink-2); }
+.muted { color: var(--muted); font-size: 13px; }
+.small { font-size: 13px; color: var(--ink-2); }
+.stat { font-size: 26px; font-weight: 600; letter-spacing: -0.01em; }
+.meter { height: 10px; border-radius: 5px; background: var(--s1-wash); overflow: hidden; margin: 6px 0 4px; }
+.meter > span { display: block; height: 100%; background: var(--s1); border-radius: 5px 0 0 5px; }
+.note { margin: 12px 0; padding: 9px 11px; border-radius: 8px; background: var(--page); font-size: 13px;
+  color: var(--ink-2); border-left: 3px solid var(--axis); }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { text-align: left; font-weight: 600; color: var(--ink-2); border-bottom: 1px solid var(--axis); padding: 4px 4px 4px 0; }
+td { border-bottom: 1px solid var(--grid); padding: 5px 4px 5px 0; vertical-align: top; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+tr.click { cursor: pointer; } tr.click:hover td { background: var(--page); }
+.badge { display: inline-block; font-size: 11px; padding: 1px 6px; border-radius: 10px; border: 1px solid var(--axis);
+  color: var(--ink-2); white-space: nowrap; }
+.entry { border-bottom: 1px solid var(--grid); padding: 8px 0; }
+.entry .amt { font-weight: 600; }
+.excerpt { font-size: 13px; color: var(--ink-2); margin: 3px 0; }
+.news li { margin-bottom: 6px; font-size: 14px; }
+.news { padding-left: 18px; margin: 4px 0; }
+.tabs button { border: 1px solid var(--axis); background: var(--surface); padding: 2px 10px; border-radius: 6px; cursor: pointer; font-size: 13px; }
+.tabs button[aria-pressed="true"] { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+.donate li { margin-bottom: 8px; font-size: 14px; }
+.donate { padding-left: 18px; margin: 4px 0; }
+.disclaimer { font-size: 12px; color: var(--muted); }
+.back { border: none; background: none; color: var(--s1); cursor: pointer; padding: 0; margin-bottom: 8px; }
+#timeline { margin: 0 16px 12px; background: var(--surface); border: 1px solid var(--grid); border-radius: 10px; padding: 12px 16px; }
+#timeline h2 { font-size: 15px; margin: 0; }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 13px; color: var(--ink-2); margin: 4px 0 2px; }
+.key { display: inline-block; width: 14px; height: 3px; border-radius: 2px; vertical-align: middle; margin-right: 6px; }
+.key.sq { width: 10px; height: 10px; border-radius: 2px; }
+svg text { fill: var(--muted); font-size: 11px; font-family: inherit; }
+.tip { position: fixed; pointer-events: none; background: var(--surface); color: var(--ink); border: 1px solid var(--grid);
+  box-shadow: 0 2px 8px rgba(0,0,0,.12); border-radius: 8px; padding: 6px 9px; font-size: 13px; display: none; z-index: 2000; }
+footer { padding: 6px 16px 24px; color: var(--ink-2); font-size: 13px; max-width: 980px; }
+.leaflet-popup-content { font: 14px/1.45 system-ui, -apple-system, "Segoe UI", "Noto Sans Devanagari", sans-serif; min-width: 220px; }
+.leaflet-popup-content h4 { margin: 0 0 4px; font-size: 15px; }
+.leaflet-popup-content-wrapper, .leaflet-popup-tip { background: var(--surface); color: var(--ink); }
+.popup-row { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; }
+.popup-row b { font-variant-numeric: tabular-nums; font-weight: 600; }
+.linkbtn { border: none; background: none; color: var(--s1); padding: 0; cursor: pointer; text-decoration: underline; font-size: 13px; }
+.leaflet-interactive:focus { outline: none; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media (max-width: 860px) {
+  main { grid-template-columns: 1fr; }
+  #map { height: 52vh; min-height: 320px; }
+  #panel { height: auto; max-height: none; }
+  .control[role="group"] { flex-wrap: wrap; width: 100%; }
+  #week-range { flex: 1 1 90px; width: auto; min-width: 0; }
+  #week-select { flex: 1 1 100%; order: 3; min-width: 0; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="title-row">
+    <h1>Nepal Flood Recovery Tracker</h1>
+    <span class="sub">Where money for recovery from the 26 August 2026 Rasuwa flood is going, week by week</span>
+  </div>
+  <div class="controls">
+    <div class="control" role="group" aria-label="Week">
+      <button class="btn week-step" id="prev" aria-label="Previous week">◀</button>
+      <input type="range" id="week-range" min="0" max="0" value="0" aria-label="Week slider">
+      <select id="week-select" aria-label="Week"></select>
+      <button class="btn week-step" id="next" aria-label="Next week">▶</button>
+      <span id="week-dates" class="muted" aria-live="polite"></span>
+    </div>
+    <label class="control">Show
+      <select id="metric">
+        <option value="committed">Committed money</option>
+        <option value="promised">Promised money</option>
+        <option value="disbursed">Disbursed money</option>
+        <option value="damage">Homes destroyed (satellite)</option>
+        <option value="articles_week">News articles this week</option>
+        <option value="articles_to_date">News articles to date</option>
+      </select>
+    </label>
+    <label class="control">for
+      <select id="level">
+        <option value="district">districts</option>
+        <option value="municipality">municipalities</option>
+        <option value="settlement">towns</option>
+      </select>
+    </label>
+    <button class="btn" id="copy-link">Copy link</button>
+    <button class="btn" id="csv">Download CSV</button>
+  </div>
+</header>
+<div class="banners" id="banners"></div>
+<main>
+  <div id="map" role="region" aria-label="Map of the flood corridor"></div>
+  <aside id="panel" aria-live="polite"></aside>
+</main>
+<section id="timeline" aria-label="Timeline">
+  <h2>Week by week</h2>
+  <div class="legend" id="legend-money">
+    <span><span class="key" style="background:var(--s1)"></span>OCHA FTS: funded against the appeal</span>
+    <span><span class="key" style="background:var(--s2)"></span>Reviewed ledger: committed (place-specific announcements)</span>
+    <span><span class="key" style="background:var(--muted);height:1px"></span>Flash appeal requirement</span>
+  </div>
+  <svg id="chart-money" width="100%" height="200" role="img" aria-label="Cumulative funding in US dollars by week"></svg>
+  <div class="legend">
+    <span><span class="key sq" style="background:var(--s3)"></span>English articles</span>
+    <span><span class="key sq" style="background:var(--s4)"></span>Nepali articles</span>
+    <span><span class="key sq" style="background:var(--hatch)"></span>Reconstructed weeks</span>
+  </div>
+  <svg id="chart-news" width="100%" height="130" role="img" aria-label="News articles per week"></svg>
+  <p class="muted">The two funding lines are never added together: they overlap and measure different things. Click a week to show it on the map.</p>
+</section>
+<footer id="footer"></footer>
+<div class="tip" id="tip"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const safeUrl = u => /^https?:\/\//i.test(u || "") ? u : "#";
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+
+const METRICS = {
+  committed: {label: "Committed", color: "--s2", money: true},
+  promised: {label: "Promised", color: "--s2", money: true},
+  disbursed: {label: "Disbursed", color: "--s2", money: true},
+  damage: {label: "Homes destroyed", color: "--s5"},
+  articles_week: {label: "Articles this week", color: "--s3"},
+  articles_to_date: {label: "Articles to date", color: "--s3"},
+};
+const LEVEL_NAMES = {district: "district", municipality: "municipality", settlement: "town"};
+const UNLOCATED = {province: "Province-level", corridor: "Several corridor districts", national: "National (e.g. the PM's relief fund)"};
+const TYPE_NAMES = {local_ngo: "local NGO", national_ngo: "national NGO", international_ngo: "INGO",
+  un_agency: "UN agency", red_cross_movement: "Red Cross", government_fund: "government fund", other: "organisation"};
+
+let INDEX = null, BASE = "", PLACES = [], BYID = {}, BOUNDS = null, WEEK = null, LATEST = null;
+const cache = {};
+const state = {week: null, area: null, level: "district", metric: null, newsTab: "en"};
+let map, boundaryLayer, bubbleLayer;
+let openPlace = null, redrawing = false;          // the popup to keep open across redraws
+let renderToken = 0, pendingWeek = null, frame = 0, scrubbing = false;
+
+// --- number formatting ----------------------------------------------------------
+function fmtNPR(n) {
+  if (n == null) return "—";
+  if (n >= 1e7) return "NPR " + (n / 1e7).toLocaleString("en", {maximumFractionDigits: n >= 1e9 ? 0 : 2}) + " crore";
+  if (n >= 1e5) return "NPR " + (n / 1e5).toLocaleString("en", {maximumFractionDigits: 2}) + " lakh";
+  return "NPR " + Math.round(n).toLocaleString("en");
+}
+function fmtUSD(n) {
+  if (n == null) return "—";
+  if (n >= 1e6) return "US$" + (n / 1e6).toLocaleString("en", {maximumFractionDigits: 2}) + "M";
+  if (n >= 1e4) return "US$" + Math.round(n / 1e3).toLocaleString("en") + "K";
+  return "US$" + Math.round(n).toLocaleString("en");
+}
+const fmtInt = n => Math.round(n || 0).toLocaleString("en");
+const fmtDate = d => d ? new Date(d.slice(0, 10) + "T00:00:00").toLocaleDateString("en-GB", {day: "numeric", month: "short", year: "numeric"}) : "";
+const weekLabel = w => { const e = INDEX.weeks.find(x => x.week === w); return w.replace("-W", " · week ") + (e && e.open_week ? " (in progress)" : ""); };
+
+// --- loading --------------------------------------------------------------------
+async function getJSON(url) { const r = await fetch(url); if (!r.ok) throw new Error(url + " " + r.status); return r.json(); }
+async function loadIndex() {
+  try { INDEX = await getJSON("data/weeks/index.json"); BASE = "data/weeks/"; }
+  catch (e) { INDEX = await getJSON("data/preview/index.json"); BASE = "data/preview/"; }
+}
+async function loadWeek(w) {
+  if (!cache[w]) { const e = INDEX.weeks.find(x => x.week === w); cache[w] = await getJSON(BASE + e.file); }
+  return cache[w];
+}
+
+// --- values per place -------------------------------------------------------------
+function valueFor(data, id, metric) {
+  if (METRICS[metric].money) {
+    const c = data.ledger.areas[id];
+    return c ? {value: c[metric].npr, has: c.n_entries > 0} : {value: 0, has: false};
+  }
+  if (metric === "damage") {
+    const d = data.damage.areas[id];
+    return d ? {value: d.destroyed, has: true} : {value: 0, has: false};
+  }
+  const src = metric === "articles_week" ? data.news.this_week : data.news.to_date;
+  const c = src[id]; const v = c ? c.en + c.ne : 0;
+  return {value: v, has: v > 0};
+}
+function fmtMetric(v, metric) {
+  if (METRICS[metric].money) return fmtNPR(v);
+  if (metric === "damage") return fmtInt(v) + " homes";
+  return fmtInt(v) + " articles";
+}
+function scaleMax(metric, level) {
+  // Cumulative measures are sized against the latest week, so a bubble's
+  // size means the same thing as you move along the timeline.
+  const ref = metric === "articles_week" ? WEEK : LATEST;
+  const vals = PLACES.filter(p => p.level === level).map(p => valueFor(ref, p.id, metric).value);
+  return Math.max(1, ...vals);
+}
+
+// --- map --------------------------------------------------------------------------
+function initMap() {
+  map = L.map("map", {scrollWheelZoom: true});   // whole zoom levels: no seams between tiles
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {maxZoom: 18,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+  boundaryLayer = L.geoJSON(BOUNDS, {style: boundaryStyle, interactive: false}).addTo(map);
+  map.fitBounds(L.geoJSON(BOUNDS.features.filter(f => f.properties.level === "district")).getBounds(), {padding: [10, 10]});
+  bubbleLayer = L.layerGroup().addTo(map);
+}
+function boundaryStyle(f) {
+  const p = f.properties, sel = state.area && (p.pcode === state.area || p.pcode === (BYID[state.area] || {}).municipality);
+  if (p.level === "district") return {color: sel ? css("--ink") : css("--ink-2"), weight: sel ? 2.5 : 1.3, opacity: 0.8, fill: false};
+  const show = state.level !== "district";
+  return {color: sel ? css("--ink") : css("--muted"), weight: sel ? 2 : 0.6, opacity: show || sel ? 0.7 : 0, fill: false};
+}
+function drawBubbles() {
+  redrawing = true; bubbleLayer.clearLayers(); redrawing = false;
+  const byPlace = {};
+  boundaryLayer.setStyle(boundaryStyle);
+  const metric = state.metric, color = css(METRICS[metric].color), surface = css("--surface"), muted = css("--muted");
+  const max = scaleMax(metric, state.level), RMAX = state.level === "district" ? 38 : 26;
+  const items = PLACES.filter(p => p.level === state.level).map(p => ({p, ...valueFor(WEEK, p.id, metric)}));
+  items.sort((a, b) => b.value - a.value);
+  for (const it of items) {
+    let marker;
+    if (!it.has) {   // no entries / not covered: a hollow ring, distinct from zero
+      marker = L.circleMarker([it.p.lat, it.p.lon], {radius: 5, color: muted, weight: 1.5, fill: false});
+    } else if (it.value <= 0) {
+      marker = L.circleMarker([it.p.lat, it.p.lon], {radius: 3.5, color: surface, weight: 1, fillColor: muted, fillOpacity: 1});
+    } else {
+      const r = 4 + (RMAX - 4) * Math.sqrt(it.value / max);
+      marker = L.circleMarker([it.p.lat, it.p.lon], {radius: r, color: surface, weight: 2, fillColor: color, fillOpacity: 0.62});
+    }
+    const status = !it.has ? (METRICS[metric].money ? "no reviewed entries" : metric === "damage" ? "outside the satellite survey" : "no articles") : fmtMetric(it.value, metric);
+    marker.bindTooltip(`<b>${esc(it.p.name_en)}</b> ${esc(it.p.name_ne)}<br>${esc(status)}`, {direction: "top", sticky: true});
+    marker.bindPopup(() => popupHTML(it.p), {maxWidth: 320});
+    marker.on("popupopen", e => { openPlace = it.p.id; const b = e.popup.getElement().querySelector("[data-details]"); if (b) b.onclick = () => selectArea(it.p.id); });
+    marker.on("popupclose", () => { if (!redrawing) openPlace = null; });
+    bubbleLayer.addLayer(marker);
+    byPlace[it.p.id] = marker;
+  }
+  if (openPlace && byPlace[openPlace]) byPlace[openPlace].openPopup();
+}
+function districtName(p) { const d = BYID[p.district]; return d ? d.name_en : ""; }
+function popupHTML(p) {
+  const c = WEEK.ledger.areas[p.id], d = WEEK.damage.areas[p.id];
+  const nw = WEEK.news.this_week[p.id] || {en: 0, ne: 0};
+  const money = c ? `<div class="popup-row"><span>Committed</span><b>${esc(fmtNPR(c.committed.npr))}</b></div>
+      <div class="popup-row"><span></span><span class="muted">${esc(fmtUSD(c.committed.usd))} · ${c.n_entries} reviewed entr${c.n_entries === 1 ? "y" : "ies"}</span></div>`
+    : `<div class="popup-row"><span>Money</span><span class="muted">no reviewed entries</span></div>`;
+  const dmg = d ? `<div class="popup-row"><span>Homes destroyed</span><b>${fmtInt(d.destroyed)}</b></div>` : "";
+  return `<h4>${esc(p.name_en)} <span class="ne">${esc(p.name_ne)}</span></h4>
+    <div class="muted">${esc(LEVEL_NAMES[p.level])}${p.level !== "district" ? ", " + esc(districtName(p)) : ""} · ${esc(WEEK.meta.week)}</div>
+    ${money}${dmg}
+    <div class="popup-row"><span>Articles this week</span><b>${nw.en} EN · ${nw.ne} NE</b></div>
+    ${donateHTML(p.id, 5)}
+    <button class="linkbtn" data-details>Details →</button>`;
+}
+function donateHTML(id, limit) {
+  const b = WEEK.donate[id];
+  if (!b) return "";
+  const items = b.items.slice(0, limit ?? b.items.length);
+  const head = b.kind === "local" ? "Where to donate" : `Where to donate <span class="muted">— ${esc(b.label)}</span>`;
+  const list = items.length ? `<ul class="donate">${items.map(i => `<li><a href="${esc(safeUrl(i.donate_url))}" target="_blank" rel="noopener">${esc(i.name_en)}</a>
+      <span class="badge">${esc(TYPE_NAMES[i.type] || i.type)}</span>${i.registration ? ` <span class="muted">${esc(i.registration)}</span>` : ""}
+      ${i.evidence_url ? `<div class="muted">${i.freshness === "active" ? "Active here" : "Last seen active"} — <a href="${esc(safeUrl(i.evidence_url))}" target="_blank" rel="noopener">source</a>, ${esc(fmtDate(i.evidence_date))}</div>` : ""}
+      <div class="muted">Link checked ${esc(fmtDate(i.verified_on))}</div></li>`).join("")}</ul>`
+    : `<p class="muted">No donation links have been checked yet.</p>`;
+  const more = limit && b.items.length > limit ? `<div class="muted">+${b.items.length - limit} more in Details</div>` : "";
+  return `<h3 style="margin:14px 0 4px">${head}</h3>${list}${more}<p class="disclaimer">${esc(b.disclaimer)}</p>`;
+}
+
+// --- side panel ---------------------------------------------------------------------
+function renderPanel() {
+  const el = $("panel");
+  el.innerHTML = state.area && BYID[state.area] ? areaPanel(BYID[state.area]) : overviewPanel();
+  el.querySelectorAll("[data-area]").forEach(x => x.onclick = () => selectArea(x.dataset.area));
+  el.querySelectorAll("[data-tab]").forEach(x => x.onclick = () => { state.newsTab = x.dataset.tab; renderPanel(); });
+  const back = el.querySelector(".back"); if (back) back.onclick = () => selectArea(null);
+}
+function ftsBlock() {
+  const f = WEEK.fts, pct = f.requirement_usd ? f.funded_usd.total / f.requirement_usd : 0;
+  const pending = f.pending_scope_decisions ? `<div class="muted">${f.pending_scope_decisions} flows reported outside the appeal are awaiting a decision on whether they belong to this flood, and are not shown.</div>` : "";
+  const oop = f.out_of_plan_in_scope_usd ? `<div class="small">Also reported to FTS outside the appeal (judged in scope): <b>${esc(fmtUSD(f.out_of_plan_in_scope_usd))}</b>, shown separately.</div>` : "";
+  return `<h3>National funding · OCHA FTS</h3>
+    <div class="stat">${esc(fmtUSD(f.funded_usd.total))} <span class="small">of ${esc(fmtUSD(f.requirement_usd))}</span></div>
+    <div class="meter" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(pct * 100)}"><span style="width:${Math.min(100, pct * 100).toFixed(1)}%"></span></div>
+    <div class="small">${(pct * 100).toFixed(1)}% of the ${esc(f.plan_name)} funded by ${esc(fmtDate(WEEK.meta.data_cutoff))}
+      (paid ${esc(fmtUSD(f.funded_usd.paid))}, committed ${esc(fmtUSD(f.funded_usd.commitment))}). Reported for Nepal as a whole, not by place.</div>${oop}${pending}`;
+}
+function ledgerRow(label, c, id) {
+  const attr = id ? ` class="click" data-area="${esc(id)}"` : "";
+  if (!c) return `<tr${attr}><td>${label}</td><td class="num muted" colspan="3">no reviewed entries</td></tr>`;
+  return `<tr${attr}><td>${label}</td><td class="num">${esc(fmtNPR(c.promised.npr))}</td><td class="num">${esc(fmtNPR(c.committed.npr))}</td><td class="num">${esc(fmtNPR(c.disbursed.npr))}</td></tr>`;
+}
+function overviewPanel() {
+  const led = WEEK.ledger, districts = PLACES.filter(p => p.level === "district");
+  const rows = districts.map(p => ledgerRow(`${esc(p.name_en)} <span class="ne">${esc(p.name_ne)}</span>`, led.areas[p.id], p.id)).join("");
+  const un = Object.entries(UNLOCATED).map(([k, label]) => led.not_location_specific[k] ? ledgerRow(esc(label), led.not_location_specific[k]) : "").join("");
+  const s = WEEK.meta.review_stats;
+  const dmgRows = districts.filter(p => WEEK.damage.areas[p.id]).map(p => `<tr class="click" data-area="${esc(p.id)}"><td>${esc(p.name_en)}</td><td class="num">${fmtInt(WEEK.damage.areas[p.id].destroyed)}</td><td class="num">${fmtInt(WEEK.damage.areas[p.id].damaged)}</td></tr>`).join("");
+  const n = WEEK.news.totals.week;
+  return `${ftsBlock()}
+    <h3>Place-specific money · reviewed news ledger</h3>
+    ${led.entries.length ? "" : `<p class="small">No entries have been reviewed for this week yet. Announcements found in the news appear here only after a person has checked each one.</p>`}
+    <table><thead><tr><th>Where</th><th class="num">Promised</th><th class="num">Committed</th><th class="num">Disbursed</th></tr></thead>
+    <tbody>${rows}</tbody>${un ? `<tbody><tr><th colspan="4">Not location-specific</th></tr>${un}</tbody>` : ""}</table>
+    <div class="note">FTS and the ledger overlap and measure different things — do not add them. Money for one district is never split among its municipalities.</div>
+    <h3>Homes destroyed · satellite survey</h3>
+    ${dmgRows ? `<table><thead><tr><th>District</th><th class="num">Destroyed</th><th class="num">Damaged</th></tr></thead><tbody>${dmgRows}</tbody></table>
+    <p class="muted">${esc(WEEK.damage.measure)}; ${esc(WEEK.damage.source)}. Covers only the four surveyed areas along the river.</p>` : `<p class="muted">No satellite product published yet.</p>`}
+    <h3>News this week</h3>
+    <p class="small">${n.en} English and ${n.ne} Nepali articles about the corridor.</p>
+    ${newsList(WEEK.news.items, 8)}
+    <h3>Review</h3>
+    <p class="small">${fmtInt(s.drafted)} money items drafted by a language model; ${fmtInt(s.approved)} approved, ${fmtInt(s.edited)} edited then approved, ${fmtInt(s.rejected)} rejected by a person.</p>`;
+}
+function entriesFor(id) {
+  return WEEK.ledger.entries.filter(e => e.place_id === id || e.pcode === id || (e.pcode || "").slice(0, 6) === id);
+}
+function newsList(items, limit) {
+  const list = items.filter(i => i.lang === state.newsTab).slice(0, limit);
+  const tabs = `<div class="tabs" role="group" aria-label="Language"><button data-tab="en" aria-pressed="${state.newsTab === "en"}">English</button> <button data-tab="ne" aria-pressed="${state.newsTab === "ne"}">नेपाली</button></div>`;
+  if (!list.length) return tabs + `<p class="muted">No articles.</p>`;
+  return tabs + `<ul class="news">${list.map(i => `<li><a href="${esc(safeUrl(i.url))}" target="_blank" rel="noopener">${esc(i.title)}</a> <span class="muted">${esc(i.outlet)}, ${esc(fmtDate(i.published))}</span></li>`).join("")}</ul>`;
+}
+function areaPanel(p) {
+  const c = WEEK.ledger.areas[p.id], d = WEEK.damage.areas[p.id], es = entriesFor(p.id);
+  const entries = es.map(e => `<div class="entry"><div><span class="amt">${esc(e.amount_text)}</span> <span class="badge">${esc(e.status)}</span>
+      <span class="small">${esc(fmtNPR(+e.amount_npr))} · ${esc(fmtUSD(+e.amount_usd))}</span></div>
+      <div class="small">${esc(e.donor_name)} · ${esc(fmtDate(e.announced_on))}${e.amount_basis !== "total" ? " · " + esc(e.amount_basis.replace("_", " ")) : ""}${e.fts_flow_id ? " · also reported to FTS (flow " + esc(e.fts_flow_id) + ")" : ""}</div>
+      ${e.sources.map(s => `<div class="excerpt">“${esc(s.excerpt)}” — <a href="${esc(safeUrl(s.url))}" target="_blank" rel="noopener">${esc(s.outlet)}</a></div>`).join("")}
+      <span class="badge">LLM-extracted, human-reviewed</span></div>`).join("");
+  const items = WEEK.news.items.filter(i => i.places.includes(p.id));
+  return `<button class="back">← All areas</button>
+    <h2>${esc(p.name_en)} <span class="ne">${esc(p.name_ne)}</span></h2>
+    <div class="muted">${esc(LEVEL_NAMES[p.level])}${p.level !== "district" ? ", " + esc(districtName(p)) + " district" : ""} · ${esc(p.id)}</div>
+    <h3>Reviewed money for this place</h3>
+    ${c ? `<table><thead><tr><th></th><th class="num">NPR</th><th class="num">US$</th></tr></thead><tbody>
+      ${["promised", "committed", "disbursed"].map(k => `<tr><td>${k[0].toUpperCase() + k.slice(1)}</td><td class="num">${esc(fmtNPR(c[k].npr))}</td><td class="num">${esc(fmtUSD(c[k].usd))}</td></tr>`).join("")}</tbody></table>
+      ${c.also_reported_to_fts_npr ? `<p class="small">Of which also reported to FTS: ${esc(fmtNPR(c.also_reported_to_fts_npr))}</p>` : ""}${entries}`
+      : `<p class="small">No reviewed entries for this place by ${esc(fmtDate(WEEK.meta.data_cutoff))}.</p>`}
+    <div class="note"><b>National — not attributable to this area.</b> OCHA FTS records ${esc(fmtUSD(WEEK.fts.funded_usd.total))} funded against the appeal for Nepal as a whole. It is not part of this place's total.</div>
+    <h3>Homes destroyed · satellite survey</h3>
+    ${d ? `<p><span class="stat">${fmtInt(d.destroyed)}</span> <span class="small">destroyed, ${fmtInt(d.damaged)} damaged, ${fmtInt(d.possibly)} possibly damaged</span></p>
+      <p class="muted">Latest products by ${esc(fmtDate(WEEK.meta.data_cutoff))}: ${WEEK.damage.products.map(x => esc(x.name) + " (" + esc(x.product) + ", " + esc(fmtDate(x.product_date)) + ")").join("; ")}.</p>`
+      : `<p class="muted">Outside the four satellite survey areas.</p>`}
+    ${donateHTML(p.id)}
+    <h3>News this week</h3>${newsList(items, 40)}`;
+}
+
+// --- timeline -------------------------------------------------------------------------
+function drawTimeline() {
+  const weeks = INDEX.weeks, W = $("chart-money").clientWidth || 800;
+  const m = {l: 54, r: W < 520 ? 128 : 150, t: 12, b: 24};
+  const band = (W - m.l - m.r) / weeks.length;
+  const x = i => m.l + band * (i + 0.5);
+  const ns = "http://www.w3.org/2000/svg";
+  const el = (tag, attrs, parent) => { const n = document.createElementNS(ns, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); parent.appendChild(n); return n; };
+  const sel = weeks.findIndex(w => w.week === state.week);
+  const hatchDefs = svg => { const d = el("defs", {}, svg); const p = el("pattern", {id: svg.id + "-hatch", width: 6, height: 6, patternUnits: "userSpaceOnUse", patternTransform: "rotate(45)"}, d);
+    el("rect", {width: 6, height: 6, fill: "transparent"}, p); el("line", {x1: 0, y1: 0, x2: 0, y2: 6, stroke: css("--hatch"), "stroke-width": 3}, p); };
+  const backdrop = (svg, H) => {
+    weeks.forEach((w, i) => { if (w.kind === "reconstructed") el("rect", {x: m.l + band * i, y: m.t, width: band, height: H - m.t - m.b, fill: `url(#${svg.id}-hatch)`}, svg); });
+    if (sel >= 0) el("rect", {x: m.l + band * sel + 1, y: m.t, width: band - 2, height: H - m.t - m.b, fill: css("--s1-wash")}, svg);
+    // Narrow screens: label every other week (always the last one) so labels never collide.
+    const every = band < 34 ? 2 : 1;
+    weeks.forEach((w, i) => { if (i % every && i !== weeks.length - 1) return;
+      const t = el("text", {x: x(i), y: H - 6, "text-anchor": "middle"}, svg); t.textContent = "W" + w.week.slice(-2); });
+  };
+  // panel 1: cumulative US$
+  const svg = $("chart-money"), H = 200; svg.innerHTML = ""; svg.setAttribute("viewBox", `0 0 ${W} ${H}`); hatchDefs(svg);
+  const req = Math.max(...weeks.map(w => w.summary.requirement_usd));
+  const yMax = Math.max(req, ...weeks.map(w => Math.max(w.summary.fts_funded_usd, w.summary.ledger_usd.committed))) * 1.08;
+  const y = v => H - m.b - (v / yMax) * (H - m.t - m.b);
+  backdrop(svg, H);
+  const step = niceStep(yMax / 4);
+  for (let v = 0; v <= yMax; v += step) {
+    el("line", {x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), stroke: css("--grid"), "stroke-width": 1}, svg);
+    const t = el("text", {x: m.l - 6, y: y(v) + 4, "text-anchor": "end"}, svg); t.textContent = fmtUSD(v).replace("US", "");
+  }
+  el("line", {x1: m.l, x2: W - m.r, y1: y(req), y2: y(req), stroke: css("--muted"), "stroke-width": 1}, svg);
+  const rl = el("text", {x: W - m.r + 6, y: y(req) + 4}, svg); rl.textContent = "Appeal " + fmtUSD(req);
+  const series = [["--s1", w => w.summary.fts_funded_usd, "FTS funded"], ["--s2", w => w.summary.ledger_usd.committed, "Ledger committed"]];
+  for (const [color, f, label] of series) {
+    el("polyline", {points: weeks.map((w, i) => `${x(i)},${y(f(w))}`).join(" "), fill: "none", stroke: css(color), "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round"}, svg);
+    weeks.forEach((w, i) => el("circle", {cx: x(i), cy: y(f(w)), r: i === sel ? 5 : 3.5, fill: css(color), stroke: css("--surface"), "stroke-width": 2}, svg));
+    const last = weeks.length - 1, t = el("text", {x: W - m.r + 6, y: y(f(weeks[last])) + 4}, svg);
+    t.textContent = (W < 520 ? "" : label + " ") + fmtUSD(f(weeks[last]));   // the legend names the lines
+  }
+  hitColumns(svg, weeks, m, band, H, w => `<b>${esc(weekLabel(w.week))}</b><br>FTS funded: ${esc(fmtUSD(w.summary.fts_funded_usd))}<br>Ledger committed: ${esc(fmtUSD(w.summary.ledger_usd.committed))}<br><span class="muted">Appeal: ${esc(fmtUSD(w.summary.requirement_usd))}</span>`);
+  // panel 2: articles per week, English and Nepali stacked
+  const svg2 = $("chart-news"), H2 = 130; svg2.innerHTML = ""; svg2.setAttribute("viewBox", `0 0 ${W} ${H2}`); hatchDefs(svg2);
+  const nMax = Math.max(1, ...weeks.map(w => w.summary.articles_week.en + w.summary.articles_week.ne)) * 1.1;
+  const y2 = v => H2 - m.b - (v / nMax) * (H2 - m.t - m.b);
+  backdrop(svg2, H2);
+  const s2 = niceStep(nMax / 3);
+  for (let v = 0; v <= nMax; v += s2) {
+    el("line", {x1: m.l, x2: W - m.r, y1: y2(v), y2: y2(v), stroke: css("--grid"), "stroke-width": 1}, svg2);
+    const t = el("text", {x: m.l - 6, y: y2(v) + 4, "text-anchor": "end"}, svg2); t.textContent = fmtInt(v);
+  }
+  const bw = Math.min(24, band * 0.6);
+  weeks.forEach((w, i) => {
+    const en = w.summary.articles_week.en, ne = w.summary.articles_week.ne, x0 = x(i) - bw / 2;
+    const hEn = y2(0) - y2(en), hNe = y2(0) - y2(ne);
+    if (en) el("rect", {x: x0, y: y2(en), width: bw, height: Math.max(0, hEn - (ne ? 0 : 0)), fill: css("--s3"), rx: ne ? 0 : 3}, svg2);
+    if (ne) el("path", {d: roundedTop(x0, y2(en + ne), bw, Math.max(0, hNe - 2), 3), fill: css("--s4")}, svg2);
+  });
+  hitColumns(svg2, weeks, m, band, H2, w => `<b>${esc(weekLabel(w.week))}</b><br>English: ${fmtInt(w.summary.articles_week.en)}<br>Nepali: ${fmtInt(w.summary.articles_week.ne)}`);
+}
+function roundedTop(x0, y0, w, h, r) {
+  if (h <= 0) return "";
+  r = Math.min(r, h, w / 2);
+  return `M${x0},${y0 + h} V${y0 + r} Q${x0},${y0} ${x0 + r},${y0} H${x0 + w - r} Q${x0 + w},${y0} ${x0 + w},${y0 + r} V${y0 + h} Z`;
+}
+function niceStep(raw) { const p = Math.pow(10, Math.floor(Math.log10(raw || 1))); const n = raw / p; return (n <= 1 ? 1 : n <= 2 ? 2 : n <= 5 ? 5 : 10) * p; }
+function hitColumns(svg, weeks, m, band, H, tipHTML) {
+  const tip = $("tip");
+  // Press and drag across the chart to move through the weeks.
+  const weekAt = e => { const box = svg.getBoundingClientRect(), vw = svg.viewBox.baseVal.width;
+    const i = Math.floor(((e.clientX - box.left) * vw / box.width - m.l) / band);
+    return weeks[Math.max(0, Math.min(weeks.length - 1, i))].week; };
+  svg.onpointerdown = e => { scrubbing = true; try { svg.setPointerCapture(e.pointerId); } catch (_) {} scrubTo(weekAt(e)); };
+  svg.onpointermove = e => { if (scrubbing) scrubTo(weekAt(e)); };
+  svg.onpointerup = svg.onpointercancel = () => { scrubbing = false; };
+  weeks.forEach((w, i) => {
+    const r = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    Object.entries({x: m.l + band * i, y: 0, width: band, height: H, fill: "transparent", style: "cursor:pointer"}).forEach(([k, v]) => r.setAttribute(k, v));
+    r.addEventListener("mousemove", e => { tip.innerHTML = tipHTML(w); tip.style.display = "block";
+      tip.style.left = Math.min(e.clientX + 14, innerWidth - 240) + "px"; tip.style.top = (e.clientY + 14) + "px"; });
+    r.addEventListener("mouseleave", () => tip.style.display = "none");
+    svg.appendChild(r);
+  });
+}
+
+// --- banners, controls, URL -------------------------------------------------------------
+function renderBanners() {
+  const m = WEEK.meta, out = [];
+  if (INDEX.preview) out.push(`<div class="banner preview"><b>Preview — not published.</b> Built on this computer ${esc(new Date(INDEX.built_at).toLocaleString("en-GB", {timeZone: "Asia/Kathmandu", day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit"}))} Nepal time from the pipeline's current state. The ledger shows only entries a person has reviewed.</div>`);
+  if (m.kind === "reconstructed") out.push(`<div class="banner recon"><b>Reconstructed week.</b> Rebuilt on ${esc(fmtDate(m.reconstructed_on))} from dated records — not a snapshot taken at the time; items reported later may be missing.</div>`);
+  if (m.kind === "late_snapshot") out.push(`<div class="banner open">Published more than a week after this week ended.</div>`);
+  if (m.open_week) out.push(`<div class="banner open"><b>Week in progress.</b> Figures will change until the week closes (Sunday 23:59, Nepal time).</div>`);
+  $("banners").innerHTML = out.join("");
+}
+function syncControls() {
+  const i = INDEX.weeks.findIndex(w => w.week === state.week);
+  $("week-range").value = i; $("week-select").value = state.week;
+  $("prev").disabled = i <= 0; $("next").disabled = i >= INDEX.weeks.length - 1;
+  $("metric").value = state.metric; $("level").value = state.level;
+  if (WEEK) { const d = s => new Date(s).toLocaleDateString("en-GB", {timeZone: "Asia/Kathmandu", day: "numeric", month: "short"});
+    $("week-dates").textContent = `${d(WEEK.meta.start_npt)} – ${d(WEEK.meta.end_npt)}`; }
+  const q = new URLSearchParams();
+  q.set("week", state.week); q.set("metric", state.metric); q.set("level", state.level);
+  if (state.area) q.set("area", state.area);
+  history.replaceState(null, "", "?" + q.toString());
+}
+function renderNow() {
+  WEEK = cache[state.week];
+  renderBanners(); syncControls(); drawBubbles(); renderPanel(); drawTimeline();
+}
+async function render() {
+  const token = ++renderToken;
+  if (!cache[state.week]) {
+    await loadWeek(state.week);
+    if (token !== renderToken) return;   // a newer week was chosen while this one loaded
+  }
+  renderNow();
+}
+function setWeek(w) { if (w && w !== state.week) { state.week = w; return render(); } }
+// Slider and timeline scrubbing: redraw at most once per screen frame.
+function scrubTo(w) {
+  pendingWeek = w;
+  if (!frame) frame = requestAnimationFrame(() => { frame = 0; setWeek(pendingWeek); });
+}
+// Fetch every week in the background so dragging never waits for the network.
+async function preloadAll() {
+  for (const w of INDEX.weeks) { try { await loadWeek(w.week); } catch (e) { console.warn(e); } }
+}
+function selectArea(id) {
+  state.area = id; renderPanel(); syncControls(); boundaryLayer.setStyle(boundaryStyle);
+  const p = id && BYID[id]; if (p) { map.closePopup(); map.panTo([p.lat, p.lon]); }
+}
+function downloadCSV() {
+  const cols = ["id", "name_en", "name_ne", "level", "district", "promised_npr", "committed_npr", "disbursed_npr",
+    "promised_usd", "committed_usd", "disbursed_usd", "reviewed_entries", "homes_destroyed", "articles_this_week", "articles_to_date"];
+  const rows = PLACES.filter(p => p.level === state.level).map(p => {
+    const c = WEEK.ledger.areas[p.id], d = WEEK.damage.areas[p.id], nw = WEEK.news.this_week[p.id], nt = WEEK.news.to_date[p.id];
+    return [p.id, p.name_en, p.name_ne, p.level, districtName(p),
+      c ? c.promised.npr : "", c ? c.committed.npr : "", c ? c.disbursed.npr : "",
+      c ? c.promised.usd : "", c ? c.committed.usd : "", c ? c.disbursed.usd : "", c ? c.n_entries : 0,
+      d ? d.destroyed : "", nw ? nw.en + nw.ne : 0, nt ? nt.en + nt.ne : 0];
+  });
+  const q = v => `"${String(v).replace(/"/g, '""')}"`;
+  const text = "﻿" + [cols, ...rows].map(r => r.map(q).join(",")).join("\r\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([text], {type: "text/csv;charset=utf-8"}));
+  a.download = `nepal-flood-recovery_${state.week}_${state.level}.csv`; a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+function renderFooter() {
+  $("footer").innerHTML = `<p><b>Sources.</b> National funding: <a href="https://fts.unocha.org/plans/${esc(WEEK.fts.plan_id)}/summary" target="_blank" rel="noopener">OCHA Financial Tracking Service</a>.
+    Damage: Copernicus Emergency Management Service EMSR927 (CC BY 4.0, © European Union). Boundaries: OCHA COD-AB Nepal (CC BY-IGO); Nepali place names: BIPAD portal.
+    Town locations and basemap: © OpenStreetMap contributors (ODbL). Exchange rates: Nepal Rastra Bank. News: links to the original publishers; headlines only.</p>
+    <p><b>Method.</b> Money announcements are found in English and Nepali news, drafted by a language model with every quote checked word for word against the article, and approved one by one by a person. Amounts are parsed by code, never by the model. Published weeks are never rewritten; corrections are listed separately.</p>`;
+}
+
+async function init() {
+  await loadIndex();
+  [PLACES, BOUNDS] = await Promise.all([getJSON("data/places.json"), getJSON("data/boundaries.geojson")]);
+  BYID = Object.fromEntries(PLACES.map(p => [p.id, p]));
+  const q = new URLSearchParams(location.search), weeks = INDEX.weeks.map(w => w.week);
+  const closed = INDEX.weeks.filter(w => !w.open_week);
+  state.week = weeks.includes(q.get("week")) ? q.get("week") : (closed.length ? closed[closed.length - 1] : INDEX.weeks[INDEX.weeks.length - 1]).week;
+  state.level = LEVEL_NAMES[q.get("level")] ? q.get("level") : "district";
+  LATEST = await loadWeek(weeks[weeks.length - 1]);
+  state.metric = METRICS[q.get("metric")] ? q.get("metric") : (LATEST.ledger.entries.length ? "committed" : "damage");
+  state.area = BYID[q.get("area")] ? q.get("area") : null;
+  $("week-select").innerHTML = INDEX.weeks.map(w => `<option value="${esc(w.week)}">${esc(weekLabel(w.week))}</option>`).join("");
+  $("week-range").max = INDEX.weeks.length - 1;
+  $("week-range").oninput = e => scrubTo(INDEX.weeks[+e.target.value].week);
+  $("week-select").onchange = e => setWeek(e.target.value);
+  $("prev").onclick = () => setWeek(INDEX.weeks[Math.max(0, weeks.indexOf(state.week) - 1)].week);
+  $("next").onclick = () => setWeek(INDEX.weeks[Math.min(weeks.length - 1, weeks.indexOf(state.week) + 1)].week);
+  $("metric").onchange = e => { state.metric = e.target.value; syncControls(); drawBubbles(); };
+  $("level").onchange = e => { state.level = e.target.value; syncControls(); drawBubbles(); };
+  $("copy-link").onclick = async () => { await navigator.clipboard.writeText(location.href); $("copy-link").textContent = "Copied ✓"; setTimeout(() => $("copy-link").textContent = "Copy link", 1500); };
+  $("csv").onclick = downloadCSV;
+  initMap();
+  await render();
+  renderFooter();
+  preloadAll();
+  addEventListener("resize", () => drawTimeline());
+}
+init().catch(e => { $("panel").innerHTML = `<p>Could not load the data: ${esc(e.message)}</p>`; console.error(e); });
+</script>
+</body>
+</html>

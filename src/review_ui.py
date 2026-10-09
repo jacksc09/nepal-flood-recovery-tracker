@@ -433,7 +433,7 @@ select,input,textarea{width:100%;font:inherit;padding:6px;border:1px solid var(-
 .row{display:grid;grid-template-columns:1fr 1fr;gap:8px}.big{font-size:20px;font-weight:700}
 .actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.actions button{padding:8px 12px;border:1px solid var(--line);border-radius:7px;background:#fff;cursor:pointer}
 .actions .ok{background:var(--good);color:#fff;border-color:var(--good);font-weight:600}.actions .no{color:var(--warn)}
-kbd{background:#eee;border:1px solid #ccc;border-radius:4px;padding:0 5px;font-size:12px}
+kbd{background:#eee;border:1px solid #ccc;border-radius:4px;padding:0 5px;font-size:12px;color:var(--ink);font-weight:400}
 table{width:100%;border-collapse:collapse;font-size:13px}td,th{border-bottom:1px solid var(--line);padding:5px;text-align:left;vertical-align:top}
 .warn{color:var(--warn);font-weight:600}.hidden{display:none}
 </style></head><body>

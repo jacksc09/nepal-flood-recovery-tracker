@@ -52,7 +52,8 @@ SECTORS = ["shelter_housing", "cash_multipurpose", "food", "wash", "health", "ed
            "roads_bridges", "hydropower_energy", "livelihoods_agriculture", "protection",
            "multi_sector", "unspecified"]
 PHASES = ["relief", "recovery", "reconstruction", "unspecified"]
-CURRENCY_HINTS = ["NPR", "USD", "AUD", "CAD", "EUR", "GBP", "CNY", "JPY", "INR", "unknown"]
+CURRENCY_HINTS = ["NPR", "USD", "AUD", "CAD", "EUR", "GBP", "CHF", "CNY", "JPY", "INR",
+                  "unknown"]
 CONFIDENCE = ["high", "medium", "low"]
 ORG_TYPES = ["local_ngo", "national_ngo", "international_ngo", "un_agency",
              "red_cross_movement", "government_fund", "other"]

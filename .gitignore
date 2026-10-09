@@ -13,3 +13,6 @@ __pycache__/
 
 # macOS
 .DS_Store
+
+# Local map preview: built from unpublished state, never deployed
+docs/data/preview/
