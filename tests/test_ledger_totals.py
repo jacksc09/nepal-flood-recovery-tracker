@@ -107,3 +107,14 @@ def test_an_fts_link_is_reported_alongside_never_added_or_subtracted():
     assert npr(cell, "committed") == Decimal(10 * CR)
     assert cell["also_reported_to_fts_npr"] == Decimal(10 * CR)
     assert not any("fts" in key and "also" not in key for key in cell)
+
+
+def test_committed_money_splits_by_phase_and_adds_up():
+    relief = dict(entry("L1", "M1", "announced", 6), phase="relief")
+    relief_firm = dict(entry("L2", "M1", "committed", 5), phase="reconstruction")   # firmest decides
+    rebuild = dict(entry("L3", "M2", "committed", 3), phase="reconstruction")
+    pledge = dict(entry("L4", "M3", "pledged", 9), phase="recovery")               # not committed
+    cell = ledger.totals_as_of([relief, relief_firm, rebuild, pledge], WEEK_END)["areas"]["NP0329402"]
+    by = {ph: v["npr"] for ph, v in cell["by_phase"].items()}
+    assert by == {"relief": 0, "recovery": 0, "reconstruction": Decimal(8 * CR), "unspecified": 0}
+    assert sum(by.values()) == npr(cell, "committed")

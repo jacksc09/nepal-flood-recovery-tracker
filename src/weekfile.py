@@ -120,7 +120,9 @@ def ledger_part(end: date, built_at: datetime) -> dict:
         return {col: {"npr": money(c[col]["npr"]), "usd": money(c[col]["usd"])}
                 for col in ledger.COLUMNS} | {
             "n_entries": c["n_entries"],
-            "also_reported_to_fts_npr": money(c["also_reported_to_fts_npr"])}
+            "also_reported_to_fts_npr": money(c["also_reported_to_fts_npr"]),
+            "by_phase": {ph: {"npr": money(v["npr"]), "usd": money(v["usd"])}
+                         for ph, v in c["by_phase"].items()}}
 
     public = []
     for e in entries:
@@ -205,23 +207,29 @@ def news_part(week: str, gaz: Gazetteer) -> dict:
 
 def donate_part(end: date, gaz: Gazetteer) -> dict:
     listings, by_id = orgs.load_areas(), orgs.load_orgs()
+    chains = {pid: area_keys(gaz, pid) for pid in gaz.places}
     out = {}
-    for pid in gaz.places:
-        if not area_keys(gaz, pid):
+    for pid, keys in chains.items():
+        if not keys:
             continue
-        out[pid] = orgs.donate_block(pid, listings, by_id, end)
+        out[pid] = orgs.donate_block(pid, listings, by_id, end, chains)
     return out
 
 
 def review_stats(built_at: datetime) -> dict:
-    stats = {"drafted": 0, "approved": 0, "edited": 0, "rejected": 0, "added_as_source": 0}
+    stats = {"drafted": 0, "approved": 0, "edited": 0, "rejected": 0, "added_as_source": 0,
+             "org_listings": 0}
     queue = (ledger.LEDGER_DIR.parent / "review" / "queue.jsonl")
     if queue.exists():
         stats["drafted"] = sum(1 for l in queue.read_text(encoding="utf-8").splitlines()
                                if l and json.loads(l)["kind"] == "ledger")
     for r in read_csv(ledger.LEDGER_DIR / "review_log.csv"):
-        if r["kind"] == "ledger" and r["reviewed_on"] <= built_at.astimezone(NPT).date().isoformat():
+        if r["reviewed_on"] > built_at.astimezone(NPT).date().isoformat():
+            continue
+        if r["kind"] == "ledger":
             stats[r["decision"]] = stats.get(r["decision"], 0) + 1
+        elif r["kind"] == "org" and r["decision"] == "approved":
+            stats["org_listings"] += 1
     return stats
 
 
@@ -264,10 +272,14 @@ def summary(week_data: dict) -> dict:
     located = {col: sum(v[col]["usd"] for v in districts.values()) for col in ledger.COLUMNS}
     unlocated = {col: sum(v[col]["usd"] for v in led["not_location_specific"].values())
                  for col in ledger.COLUMNS}
+    rebuilding = sum(v["by_phase"][ph]["usd"]
+                     for v in list(districts.values()) + list(led["not_location_specific"].values())
+                     for ph in ledger.REBUILDING_PHASES)
     return {"fts_funded_usd": week_data["fts"]["funded_usd"]["total"],
             "fts_out_of_plan_in_scope_usd": week_data["fts"]["out_of_plan_in_scope_usd"],
             "requirement_usd": week_data["fts"]["requirement_usd"],
             "ledger_usd": {col: located[col] + unlocated[col] for col in ledger.COLUMNS},
+            "ledger_rebuilding_usd": rebuilding,
             "ledger_entries": len(led["entries"]),
             "articles_week": week_data["news"]["totals"]["week"],
             "homes_destroyed": sum(v["destroyed"] for k, v in week_data["damage"]["areas"].items()

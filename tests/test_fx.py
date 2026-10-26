@@ -50,3 +50,13 @@ def test_convert_npr_to_usd(rates):
 def test_unconfirmed_currencies_are_not_converted(rates):
     with pytest.raises(ValueError):
         rates.convert(Decimal(100), "USD?", "NPR", date(2026, 10, 1))
+
+
+def test_a_currency_nrb_does_not_publish_is_crossed_through_the_euro():
+    import fetch_fx
+    nrb = [{"date": "2026-10-05", "currency": "EUR", "unit": "1", "buy": "178.60", "sell": "178.60"}]
+    ecb = {"2026-10-02": {"NZD": "1.9000"}}          # Friday: ECB publishes no weekend rates
+    rows = fetch_fx.cross_rows(nrb, ecb, ["NZD"])
+    assert len(rows) == 1 and rows[0]["currency"] == "NZD" and rows[0]["date"] == "2026-10-05"
+    assert rows[0]["source"].startswith("ECB")
+    assert fx.Rates(nrb + rows).npr_per_unit("NZD", date(2026, 10, 5))[0] == Decimal("94.0")

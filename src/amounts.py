@@ -11,7 +11,8 @@ What it understands:
   * Nepali/South Asian units: सय (hundred), हजार (thousand), लाख/lakh
     (100,000), करोड/crore (10 million), अर्ब/arba (1 billion),
     खर्ब/kharba (100 billion)
-  * English units: hundred, thousand/k, million/m/mn, billion/bn
+  * English units: hundred, thousand/k, million/m/mn, billion/bn (also
+    written in Devanagari: मिलियन, बिलियन)
   * Nepali number words before a unit (एक करोड, डेढ करोड = 1.5 crore,
     साढे तीन करोड = 3.5 crore)
   * compounds with units getting smaller (रु ५ करोड ५० लाख), which may
@@ -19,7 +20,9 @@ What it understands:
     (५५ लाख ५५ हजार ५५५ = 5,555,555)
   * a repeated number, which in Nepali means "each" (१०–१० हजार = 10
     thousand each), as opposed to a range (5-10 crore), which is refused
-  * currencies: NPR, USD, AUD, CAD, EUR, GBP, CHF, CNY, JPY, INR
+  * currencies: NPR, USD, AUD, CAD, NZD, EUR, GBP, CHF, CNY, JPY, INR, KRW, MYR,
+    and the others Nepal Rastra Bank publishes (DKK, SEK, SGD, HKD, AED, SAR,
+    QAR, THB, KWD, and CZK/NOK via the euro); paisa (hundredths of a rupee) are kept
 
 Two results carry a "?" and must be confirmed by a person in review:
   * "USD?" - a bare "$" or "dollars" (Nepali news also reports Australian
@@ -50,10 +53,26 @@ _CURRENCY_PATTERNS = [
     # Nepali spells the countries several ways (अष्ट्रेलियन, अस्ट्रेलियाली...).
     ("AUD", r"\bau?\$|\baud\b|australian\s+dollars?|(?:अष्ट्र|अस्ट्र|आस्ट्र|आष्ट्र)\S*\s+डलर\S*"),
     ("CAD", r"\bc\$|\bcad\b|canadian\s+dollars?|(?:क्यानेडि|क्यानडा|क्यानाडा)\S*\s+डलर\S*"),
+    ("NZD", r"\bnz\$|\bnzd\b|new\s+zealand\s+dollars?|(?:न्युजि|न्यूजि)\S*\s+डलर\S*"),
+    ("KRW", r"\bkrw\b|(?:south\s+)?korean\s+won|\bwon\b|(?:कोरियाली|कोरियन)\s+वन\S*"),
+    ("MYR", r"\bmyr\b|\bringgits?\b|(?:रिङ्गिट|रिंगिट)\S*"),
+    # Other currencies Nepal Rastra Bank publishes, by code and English name.
+    ("DKK", r"\bdkk\b|danish\s+kron(?:e|er)"),
+    ("SEK", r"\bsek\b|swedish\s+kron(?:a|or)"),
+    ("SGD", r"\bsgd\b|\bs\$|singapore\s+dollars?"),
+    ("HKD", r"\bhkd\b|\bhk\$|hong\s+kong\s+dollars?"),
+    ("AED", r"\baed\b|(?:uae\s+)?dirhams?"),
+    ("SAR", r"\bsar\b|saudi\s+riyals?"),
+    ("QAR", r"\bqar\b|qatari\s+riyals?"),
+    ("THB", r"\bthb\b|thai\s+baht|\bbaht\b"),
+    ("KWD", r"\bkwd\b|kuwaiti\s+dinars?"),
+    # Not published by NRB: converted through the euro (fetch_fx.py).
+    ("CZK", r"\bczk\b|czech\s+korun(?:a|y)"),
+    ("NOK", r"\bnok\b|norwegian\s+kron(?:e|er)"),
     ("USD", r"\bus\s?\$|\busd\b|\bu\.?s\.?\s+dollars?|american\s+dollars?"
             r"|(?:अमेरिकी|अमेरिकन|युएस)\s+डलर\S*"),
     ("EUR", r"€|\beur\b|\beuros?\b|युरो\S*"),
-    ("GBP", r"£|\bgbp\b|\bpounds?\s+sterling\b|\bpounds?\b|\bsterling\b|पाउन्ड\S*"),
+    ("GBP", r"£|\bgbp\b|\bpounds?\s+sterling\b|\bpounds?\b|\bsterling\b|पाउन्ड\S*|पाउण्ड\S*"),
     ("CNY", r"\byuan\b|\brmb\b|\bcny\b|\brenminbi\b|युआन\S*"),
     ("JPY", r"\byen\b|\bjpy\b|येन\S*"),
     ("CHF", r"\bchf\b|swiss\s+francs?|स्विस\s+फ्र\S*"),
@@ -68,7 +87,10 @@ _CURRENCY_RES = [(code, re.compile(rx)) for code, rx in _CURRENCY_PATTERNS]
 # Units. Nepali units are matched as a word START so case endings still
 # match (करोडको = "of crore"); English units need a word boundary after.
 _UNITS_NE = {"सय": 10**2, "हजार": 10**3, "लाख": 10**5, "करोड": 10**7,
-             "अर्ब": 10**9, "अरब": 10**9, "खर्ब": 10**11, "खरब": 10**11}
+             "अर्ब": 10**9, "अरब": 10**9, "खर्ब": 10**11, "खरब": 10**11,
+             # English units written in Devanagari (not South Asian units)
+             "मिलियन": 10**6, "बिलियन": 10**9}
+_ENGLISH_IN_NE = {"मिलियन", "बिलियन"}
 _UNITS_EN = {"hundred": 10**2, "thousand": 10**3, "k": 10**3,
              "lakhs": 10**5, "lakh": 10**5, "lacs": 10**5, "lac": 10**5,
              "crores": 10**7, "crore": 10**7, "cr": 10**7,
@@ -103,7 +125,8 @@ _QTY_RE = re.compile(
     r"(?:"
     rf"(?P<digits>\d+(?:,\d+)*(?:\.\d+)?)\s*(?P<unit1>{_UNIT})?"
     r"|"
-    rf"(?P<word>(?<![{_DEV}])(?:{_alternation(_WORD_NE)})(?![{_DEV}])"
+    # A Nepali number word stands alone, or is written joined to its unit (एकलाख).
+    rf"(?P<word>(?<![{_DEV}])(?:{_alternation(_WORD_NE)})(?:(?![{_DEV}])|(?={_alternation(_UNITS_NE)}))"
     rf"|\b(?:{_alternation(_WORD_EN)})\b)\s*(?P<unit2>{_UNIT})"
     r")"
 )
@@ -135,6 +158,12 @@ def parse_amount(text: str) -> tuple:
     """'रु ५ करोड' -> (Decimal('50000000'), 'NPR'). Raises AmountError."""
     low = norm(text).lower()
     currency, rest = _find_currency(low)
+    # Paisa are hundredths of a rupee ("७४ रुपैयाँ ६७ पैसा"): set them aside.
+    paisa = Decimal(0)
+    m = re.search(r"(\d{1,2})\s*(?:पैसा|paisa)\S*", rest)
+    if m:
+        paisa = Decimal(m.group(1)) / 100
+        rest = rest[:m.start()] + " " * (m.end() - m.start()) + rest[m.end():]
     # "10-10" or "5/5" (the same number twice) means "each": keep one.
     rest = re.sub(r"(\d+(?:[,.]\d+)*)\s*[-/]\s*\1(?![\d,.])", r"\1", rest)
 
@@ -165,7 +194,7 @@ def parse_amount(text: str) -> tuple:
         if None in units or any(a <= b for a, b in zip(units, units[1:])):
             raise AmountError(f"more than one number (a range or a list?): {text!r}")
 
-    value = sum((number * (unit or 1) for number, unit in parts), Decimal(0))
+    value = sum((number * (unit or 1) for number, unit in parts), Decimal(0)) + paisa
     if value <= 0:
         raise AmountError(f"not a positive amount: {text!r}")
     if value == value.to_integral_value():
@@ -182,7 +211,8 @@ def parse_amount(text: str) -> tuple:
 def _is_south_asian(text: str) -> bool:
     """Lakh/crore/arba (or a Nepali unit word) mark South Asian money."""
     return bool(re.search(
-        rf"{_alternation(_UNITS_NE)}|\b(?:lakhs?|lacs?|crores?|cr|arba|arab|kharba|kharab)\b",
+        rf"{_alternation(set(_UNITS_NE) - _ENGLISH_IN_NE)}"
+        r"|\b(?:lakhs?|lacs?|crores?|cr|arba|arab|kharba|kharab)\b",
         text))
 
 

@@ -14,6 +14,8 @@
   --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100; --s5: #e87ba4;
   --s1-wash: rgba(42,120,214,0.10); --amber-bg: #fdf3dc; --amber-ink: #6b4a00; --amber-line: #e8c675;
   --info-bg: #eef4fc; --info-ink: #1c3f6e; --hatch: rgba(137,135,129,0.22);
+  --gap-none: #184f95; --gap-some: #86b6ef;
+  --ph-relief: #f29a72; --ph-recovery: #eb6834; --ph-recon: #a8401a;
 }
 @media (prefers-color-scheme: dark) {
   :root:where(:not([data-theme="light"])) {
@@ -23,6 +25,8 @@
     --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #d55181;
     --s1-wash: rgba(57,135,229,0.14); --amber-bg: #33280f; --amber-ink: #f3d58c; --amber-line: #6e5520;
     --info-bg: #14233a; --info-ink: #b9d3f5; --hatch: rgba(137,135,129,0.25);
+    --gap-none: #9ec5f4; --gap-some: #256abf;
+    --ph-relief: #9a3c14; --ph-recovery: #d95926; --ph-recon: #f2a582;
   }
 }
 :root[data-theme="dark"] {
@@ -32,6 +36,8 @@
   --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #d55181;
   --s1-wash: rgba(57,135,229,0.14); --amber-bg: #33280f; --amber-ink: #f3d58c; --amber-line: #6e5520;
   --info-bg: #14233a; --info-ink: #b9d3f5; --hatch: rgba(137,135,129,0.25);
+  --gap-none: #9ec5f4; --gap-some: #256abf;
+  --ph-relief: #9a3c14; --ph-recovery: #d95926; --ph-recon: #f2a582;
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; background: var(--page); color: var(--ink);
@@ -103,11 +109,28 @@ svg text { fill: var(--muted); font-size: 11px; font-family: inherit; }
 footer { padding: 6px 16px 24px; color: var(--ink-2); font-size: 13px; max-width: 980px; }
 .leaflet-popup-content { font: 14px/1.45 system-ui, -apple-system, "Segoe UI", "Noto Sans Devanagari", sans-serif; min-width: 220px; }
 .leaflet-popup-content h4 { margin: 0 0 4px; font-size: 15px; }
+.leaflet-popup-content h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-2); font-weight: 600; }
+.leaflet-popup-content .orgs li { font-size: 13px; padding: 4px 0; }
 .leaflet-popup-content-wrapper, .leaflet-popup-tip { background: var(--surface); color: var(--ink); }
 .popup-row { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; }
 .popup-row b { font-variant-numeric: tabular-nums; font-weight: 600; }
 .linkbtn { border: none; background: none; color: var(--s1); padding: 0; cursor: pointer; text-decoration: underline; font-size: 13px; }
 .leaflet-interactive:focus { outline: none; }
+.chip { display: inline-block; font-size: 12px; padding: 1px 8px; border-radius: 10px; background: var(--info-bg); color: var(--info-ink); margin: 3px 0; }
+.orgs { list-style: none; padding: 0; margin: 4px 0; }
+.orgs li { padding: 6px 0; border-bottom: 1px solid var(--grid); font-size: 14px; }
+.orgs li:last-child { border-bottom: none; }
+.give { display: inline-block; margin-top: 3px; font-size: 13px; font-weight: 600; }
+.phasebar { display: flex; gap: 2px; height: 12px; margin: 6px 0 4px; }
+.phasebar span { display: block; height: 100%; min-width: 3px; }
+.phasebar span:first-child { border-radius: 4px 0 0 4px; } .phasebar span:last-child { border-radius: 0 4px 4px 0; }
+.phasebar span:only-child { border-radius: 4px; }
+.map-legend { background: var(--surface); color: var(--ink-2); border: 1px solid var(--grid); border-radius: 8px;
+  padding: 7px 9px; font: 12px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; max-width: 230px; }
+.map-legend .sw { display: inline-block; width: 11px; height: 11px; border-radius: 50%; vertical-align: -1px; margin-right: 5px; }
+.map-legend .ring { display: inline-block; width: 10px; height: 10px; border-radius: 50%; border: 1.5px solid var(--muted); vertical-align: -1px; margin-right: 5px; }
+table.gap th.num, table.gap td.wrap { white-space: normal; }
+.more { border: 1px solid var(--axis); background: var(--surface); border-radius: 7px; padding: 3px 10px; cursor: pointer; font-size: 13px; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 @media (max-width: 860px) {
   main { grid-template-columns: 1fr; }
@@ -116,6 +139,11 @@ footer { padding: 6px 16px 24px; color: var(--ink-2); font-size: 13px; max-width
   .control[role="group"] { flex-wrap: wrap; width: 100%; }
   #week-range { flex: 1 1 90px; width: auto; min-width: 0; }
   #week-select { flex: 1 1 100%; order: 3; min-width: 0; }
+  label.control { max-width: 100%; min-width: 0; }
+  label.control select { min-width: 0; max-width: calc(100vw - 90px); }
+  .map-legend { font-size: 11px; max-width: 180px; padding: 5px 7px; }
+  #panel table { font-size: 12px; }
+  #panel td.num, #panel th.num { white-space: normal; }
 }
 </style>
 </head>
@@ -135,9 +163,11 @@ footer { padding: 6px 16px 24px; color: var(--ink-2); font-size: 13px; max-width
     </div>
     <label class="control">Show
       <select id="metric">
+        <option value="gap">Damage vs money: where help is thinnest</option>
         <option value="committed">Committed money</option>
         <option value="promised">Promised money</option>
         <option value="disbursed">Disbursed money</option>
+        <option value="rebuild">Rebuilding money (recovery and reconstruction)</option>
         <option value="damage">Homes destroyed (satellite)</option>
         <option value="articles_week">News articles this week</option>
         <option value="articles_to_date">News articles to date</option>
@@ -164,6 +194,7 @@ footer { padding: 6px 16px 24px; color: var(--ink-2); font-size: 13px; max-width
   <div class="legend" id="legend-money">
     <span><span class="key" style="background:var(--s1)"></span>OCHA FTS: funded against the appeal</span>
     <span><span class="key" style="background:var(--s2)"></span>Reviewed ledger: committed (place-specific announcements)</span>
+    <span><span class="key" style="background:var(--ph-recon)"></span>Of which rebuilding (recovery and reconstruction)</span>
     <span><span class="key" style="background:var(--muted);height:1px"></span>Flash appeal requirement</span>
   </div>
   <svg id="chart-money" width="100%" height="200" role="img" aria-label="Cumulative funding in US dollars by week"></svg>
@@ -187,9 +218,11 @@ const safeUrl = u => /^https?:\/\//i.test(u || "") ? u : "#";
 const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 
 const METRICS = {
+  gap: {label: "Homes destroyed", gap: true},
   committed: {label: "Committed", color: "--s2", money: true},
   promised: {label: "Promised", color: "--s2", money: true},
   disbursed: {label: "Disbursed", color: "--s2", money: true},
+  rebuild: {label: "Rebuilding money", color: "--s2", money: true},
   damage: {label: "Homes destroyed", color: "--s5"},
   articles_week: {label: "Articles this week", color: "--s3"},
   articles_to_date: {label: "Articles to date", color: "--s3"},
@@ -198,11 +231,18 @@ const LEVEL_NAMES = {district: "district", municipality: "municipality", settlem
 const UNLOCATED = {province: "Province-level", corridor: "Several corridor districts", national: "National (e.g. the PM's relief fund)"};
 const TYPE_NAMES = {local_ngo: "local NGO", national_ngo: "national NGO", international_ngo: "INGO",
   un_agency: "UN agency", red_cross_movement: "Red Cross", government_fund: "government fund", other: "organisation"};
+const PHASES = ["relief", "recovery", "reconstruction", "unspecified"];
+const PHASE_NAMES = {relief: "Relief", recovery: "Recovery", reconstruction: "Reconstruction", unspecified: "Not stated"};
+const PHASE_COLORS = {relief: "--ph-relief", recovery: "--ph-recovery", reconstruction: "--ph-recon", unspecified: "--axis"};
+const SECTOR_NAMES = {shelter_housing: "shelter and housing", cash_multipurpose: "cash", food: "food", wash: "water and sanitation",
+  health: "health", education: "education", roads_bridges: "roads and bridges", hydropower_energy: "energy",
+  livelihoods_agriculture: "livelihoods", protection: "protection", multi_sector: "several sectors", unspecified: ""};
 
 let INDEX = null, BASE = "", PLACES = [], BYID = {}, BOUNDS = null, WEEK = null, LATEST = null;
 const cache = {};
-const state = {week: null, area: null, level: "district", metric: null, newsTab: "en"};
-let map, boundaryLayer, bubbleLayer;
+const state = {week: null, area: null, level: "district", metric: null, newsTab: "en", newsLimit: 15};
+let map, boundaryLayer, bubbleLayer, legend;
+let baseZoom = 9, zoomSync = false;               // zooming in moves district -> municipality -> town
 let openPlace = null, redrawing = false;          // the popup to keep open across redraws
 let renderToken = 0, pendingWeek = null, frame = 0, scrubbing = false;
 
@@ -235,14 +275,31 @@ async function loadWeek(w) {
 }
 
 // --- values per place -------------------------------------------------------------
+function rebuildingNPR(c) {
+  const b = c && c.by_phase;
+  return b ? (b.recovery ? b.recovery.npr : 0) + (b.reconstruction ? b.reconstruction.npr : 0) : 0;
+}
+// Damage against money for one place: satellite homes destroyed, and the
+// committed money in the reviewed ledger that names this place (never split
+// down from a district, never including national money).
+function gapInfo(data, id) {
+  const d = data.damage.areas[id];
+  if (!d || !d.destroyed) return null;
+  const c = data.ledger.areas[id], npr = c ? c.committed.npr : 0;
+  return {destroyed: d.destroyed, npr, perHome: npr / d.destroyed, none: !npr};
+}
 function valueFor(data, id, metric) {
+  if (metric === "gap" || metric === "damage") {
+    const d = data.damage.areas[id];
+    return d ? {value: d.destroyed, has: true} : {value: 0, has: false};
+  }
+  if (metric === "rebuild") {
+    const c = data.ledger.areas[id];
+    return c ? {value: rebuildingNPR(c), has: c.n_entries > 0} : {value: 0, has: false};
+  }
   if (METRICS[metric].money) {
     const c = data.ledger.areas[id];
     return c ? {value: c[metric].npr, has: c.n_entries > 0} : {value: 0, has: false};
-  }
-  if (metric === "damage") {
-    const d = data.damage.areas[id];
-    return d ? {value: d.destroyed, has: true} : {value: 0, has: false};
   }
   const src = metric === "articles_week" ? data.news.this_week : data.news.to_date;
   const c = src[id]; const v = c ? c.en + c.ne : 0;
@@ -250,7 +307,7 @@ function valueFor(data, id, metric) {
 }
 function fmtMetric(v, metric) {
   if (METRICS[metric].money) return fmtNPR(v);
-  if (metric === "damage") return fmtInt(v) + " homes";
+  if (metric === "damage" || metric === "gap") return fmtInt(v) + " homes destroyed";
   return fmtInt(v) + " articles";
 }
 function scaleMax(metric, level) {
@@ -268,7 +325,54 @@ function initMap() {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
   boundaryLayer = L.geoJSON(BOUNDS, {style: boundaryStyle, interactive: false}).addTo(map);
   map.fitBounds(L.geoJSON(BOUNDS.features.filter(f => f.properties.level === "district")).getBounds(), {padding: [10, 10]});
+  const corridor = L.geoJSON(BOUNDS.features.filter(f => f.properties.level === "district")).getBounds();
+  baseZoom = map.getZoom();
+  // The pane can still be settling its size when the page loads: re-measure,
+  // and re-fit if the first fit was made for a much smaller map.
+  map.on("resize", () => {
+    const fit = map.getBoundsZoom(corridor, false, L.point(20, 20));
+    if (map.getZoom() < fit - 2) { zoomSync = true; map.once("zoomend", () => { zoomSync = false; }); map.fitBounds(corridor, {padding: [10, 10]}); }
+    baseZoom = fit;
+  });
+  if (state.level !== "district") map.setZoom(LEVEL_ZOOM()[state.level], {animate: false});
   bubbleLayer = L.layerGroup().addTo(map);
+  legend = L.control({position: "bottomleft"});
+  legend.onAdd = () => L.DomUtil.create("div", "map-legend");
+  legend.addTo(map);
+  map.on("popupopen", () => { legend.getContainer().style.display = "none"; });
+  map.on("popupclose", () => { legend.getContainer().style.display = ""; });
+  map.on("zoomend", () => {
+    if (zoomSync) return;
+    const level = levelForZoom(map.getZoom());
+    if (level !== state.level) { state.level = level; levelChanged(); }
+  });
+}
+// Zooming in shows smaller areas: districts, then municipalities, then towns.
+const LEVEL_ZOOM = () => ({district: baseZoom, municipality: baseZoom + 1, settlement: baseZoom + 3});
+const levelForZoom = z => z <= baseZoom ? "district" : z <= baseZoom + 2 ? "municipality" : "settlement";
+function setLevel(level) {          // from the dropdown: move the map to match
+  state.level = level;
+  if (levelForZoom(map.getZoom()) !== level) {
+    zoomSync = true;
+    map.once("zoomend", () => { zoomSync = false; });
+    map.setZoom(LEVEL_ZOOM()[level]);
+  }
+  levelChanged();
+}
+function levelChanged() { syncControls(); drawBubbles(); if (!state.area) renderPanel(); }
+function renderLegend() {
+  const m = state.metric, el = legend.getContainer();
+  const hint = `<div class="muted" style="margin-top:4px">${state.level === "settlement" ? "Zoom out for municipalities and districts." : "Zoom in for municipalities and towns."}</div>`;
+  if (m === "gap") {
+    el.innerHTML = `<b>Damage vs money</b><br>Size: homes destroyed (satellite survey)<br>
+      <span class="sw" style="background:var(--gap-none)"></span>No committed money named for this place<br>
+      <span class="sw" style="background:var(--gap-some)"></span>Some committed money named<br>
+      <span class="ring"></span>Outside the satellite survey${hint}`;
+    return;
+  }
+  const none = METRICS[m].money ? "No reviewed entries" : m === "damage" ? "Outside the satellite survey" : "No articles";
+  el.innerHTML = `<b>${esc(METRICS[m].label)}</b><br><span class="sw" style="background:var(${METRICS[m].color});opacity:.7"></span>Size shows the amount<br>
+    <span class="ring"></span>${none}${hint}`;
 }
 function boundaryStyle(f) {
   const p = f.properties, sel = state.area && (p.pcode === state.area || p.pcode === (BYID[state.area] || {}).municipality);
@@ -280,7 +384,8 @@ function drawBubbles() {
   redrawing = true; bubbleLayer.clearLayers(); redrawing = false;
   const byPlace = {};
   boundaryLayer.setStyle(boundaryStyle);
-  const metric = state.metric, color = css(METRICS[metric].color), surface = css("--surface"), muted = css("--muted");
+  const metric = state.metric, surface = css("--surface"), muted = css("--muted");
+  const color = metric === "gap" ? null : css(METRICS[metric].color), gapNone = css("--gap-none"), gapSome = css("--gap-some");
   const max = scaleMax(metric, state.level), RMAX = state.level === "district" ? 38 : 26;
   const items = PLACES.filter(p => p.level === state.level).map(p => ({p, ...valueFor(WEEK, p.id, metric)}));
   items.sort((a, b) => b.value - a.value);
@@ -292,45 +397,82 @@ function drawBubbles() {
       marker = L.circleMarker([it.p.lat, it.p.lon], {radius: 3.5, color: surface, weight: 1, fillColor: muted, fillOpacity: 1});
     } else {
       const r = 4 + (RMAX - 4) * Math.sqrt(it.value / max);
-      marker = L.circleMarker([it.p.lat, it.p.lon], {radius: r, color: surface, weight: 2, fillColor: color, fillOpacity: 0.62});
+      const g = metric === "gap" && gapInfo(WEEK, it.p.id);
+      marker = metric === "gap"
+        ? L.circleMarker([it.p.lat, it.p.lon], {radius: r, color: surface, weight: 2, fillColor: g && g.none ? gapNone : gapSome, fillOpacity: 0.85})
+        : L.circleMarker([it.p.lat, it.p.lon], {radius: r, color: surface, weight: 2, fillColor: color, fillOpacity: 0.62});
     }
-    const status = !it.has ? (METRICS[metric].money ? "no reviewed entries" : metric === "damage" ? "outside the satellite survey" : "no articles") : fmtMetric(it.value, metric);
+    const status = !it.has ? (METRICS[metric].money ? "no reviewed entries" : metric === "damage" || metric === "gap" ? "outside the satellite survey" : "no articles")
+      : metric === "gap" ? gapText(gapInfo(WEEK, it.p.id)) : fmtMetric(it.value, metric);
     marker.bindTooltip(`<b>${esc(it.p.name_en)}</b> ${esc(it.p.name_ne)}<br>${esc(status)}`, {direction: "top", sticky: true});
-    marker.bindPopup(() => popupHTML(it.p), {maxWidth: 320});
+    marker.bindPopup(() => popupHTML(it.p), {maxWidth: 320, maxHeight: Math.max(220, map.getSize().y - 90)});
     marker.on("popupopen", e => { openPlace = it.p.id; const b = e.popup.getElement().querySelector("[data-details]"); if (b) b.onclick = () => selectArea(it.p.id); });
     marker.on("popupclose", () => { if (!redrawing) openPlace = null; });
     bubbleLayer.addLayer(marker);
     byPlace[it.p.id] = marker;
   }
   if (openPlace && byPlace[openPlace]) byPlace[openPlace].openPopup();
+  renderLegend();
+}
+function gapText(g) {
+  if (!g) return "no homes recorded destroyed";
+  return `${fmtInt(g.destroyed)} homes destroyed · ` + (g.none ? "no committed money named for this place"
+    : `${fmtNPR(g.npr)} committed (${fmtNPR(g.perHome)} per home)`);
 }
 function districtName(p) { const d = BYID[p.district]; return d ? d.name_en : ""; }
 function popupHTML(p) {
-  const c = WEEK.ledger.areas[p.id], d = WEEK.damage.areas[p.id];
+  const c = WEEK.ledger.areas[p.id];
   const nw = WEEK.news.this_week[p.id] || {en: 0, ne: 0};
   const money = c ? `<div class="popup-row"><span>Committed</span><b>${esc(fmtNPR(c.committed.npr))}</b></div>
       <div class="popup-row"><span></span><span class="muted">${esc(fmtUSD(c.committed.usd))} · ${c.n_entries} reviewed entr${c.n_entries === 1 ? "y" : "ies"}</span></div>`
     : `<div class="popup-row"><span>Money</span><span class="muted">no reviewed entries</span></div>`;
-  const dmg = d ? `<div class="popup-row"><span>Homes destroyed</span><b>${fmtInt(d.destroyed)}</b></div>` : "";
   return `<h4>${esc(p.name_en)} <span class="ne">${esc(p.name_ne)}</span></h4>
     <div class="muted">${esc(LEVEL_NAMES[p.level])}${p.level !== "district" ? ", " + esc(districtName(p)) : ""} · ${esc(WEEK.meta.week)}</div>
-    ${money}${dmg}
+    ${orgsHTML(p.id, 3)}
+    <h3 style="margin:12px 0 4px">Damage and money</h3>${gapHTML(p, true)}
+    ${money}
     <div class="popup-row"><span>Articles this week</span><b>${nw.en} EN · ${nw.ne} NE</b></div>
-    ${donateHTML(p.id, 5)}
     <button class="linkbtn" data-details>Details →</button>`;
 }
-function donateHTML(id, limit) {
+// Satellite damage against the money named for this place, with the
+// district's own figure alongside for a municipality or town.
+function gapHTML(p, compact) {
+  const g = gapInfo(WEEK, p.id), d = WEEK.damage.areas[p.id];
+  if (!d) return `<div class="small">Outside the satellite survey, so damage here is not measured.</div>`;
+  const row = (label, value) => compact ? `<div class="popup-row"><span>${label}</span><b>${value}</b></div>` : `<tr><td>${label}</td><td class="num">${value}</td></tr>`;
+  const rows = [row("Homes destroyed", fmtInt(d.destroyed))];
+  if (g) rows.push(row("Committed money named here", esc(g.none ? "none" : fmtNPR(g.npr))),
+    ...(g.none ? [] : [row("Per home destroyed", esc(fmtNPR(g.perHome)))]));
+  const dist = p.level !== "district" ? WEEK.ledger.areas[p.district] : null;
+  const distLine = p.level !== "district" ? `<div class="muted">${esc(districtName(p))} district: ${dist ? esc(fmtNPR(dist.committed.npr)) + " committed for the district as a whole" : "no committed money named"}; district money is never split among its municipalities.</div>` : "";
+  const chip = g && g.none ? `<span class="chip">No committed money named here for the damage</span>` : "";
+  return (compact ? rows.join("") : `<table><tbody>${rows.join("")}</tbody></table>`) + chip + distLine;
+}
+// Who is working here, and where to give: organisations with reviewed
+// evidence of working in this place (or, labelled, its municipality or
+// district), each with its donation link once a person has checked it.
+function orgsHTML(id, limit) {
   const b = WEEK.donate[id];
   if (!b) return "";
-  const items = b.items.slice(0, limit ?? b.items.length);
-  const head = b.kind === "local" ? "Where to donate" : `Where to donate <span class="muted">— ${esc(b.label)}</span>`;
-  const list = items.length ? `<ul class="donate">${items.map(i => `<li><a href="${esc(safeUrl(i.donate_url))}" target="_blank" rel="noopener">${esc(i.name_en)}</a>
-      <span class="badge">${esc(TYPE_NAMES[i.type] || i.type)}</span>${i.registration ? ` <span class="muted">${esc(i.registration)}</span>` : ""}
-      ${i.evidence_url ? `<div class="muted">${i.freshness === "active" ? "Active here" : "Last seen active"} — <a href="${esc(safeUrl(i.evidence_url))}" target="_blank" rel="noopener">source</a>, ${esc(fmtDate(i.evidence_date))}</div>` : ""}
-      <div class="muted">Link checked ${esc(fmtDate(i.verified_on))}</div></li>`).join("")}</ul>`
-    : `<p class="muted">No donation links have been checked yet.</p>`;
-  const more = limit && b.items.length > limit ? `<div class="muted">+${b.items.length - limit} more in Details</div>` : "";
-  return `<h3 style="margin:14px 0 4px">${head}</h3>${list}${more}<p class="disclaimer">${esc(b.disclaimer)}</p>`;
+  const working = b.working || [], items = limit ? working.slice(0, limit) : working;
+  const area = b.working_area && BYID[b.working_area];
+  const head = b.working_scope === "here" || !area ? "Organisations working here"
+    : `Working elsewhere in ${esc(area.name_en)} ${esc(LEVEL_NAMES[area.level])}`;
+  const item = i => {
+    const where = i.place_id !== id && BYID[i.place_id] ? ` in ${esc(BYID[i.place_id].name_en)}` : "";
+    const seen = `${i.freshness === "active" ? "Active" : "Last seen active"}${where}: <a href="${esc(safeUrl(i.evidence_url))}" target="_blank" rel="noopener">source</a>, ${esc(fmtDate(i.evidence_date))}`;
+    const give = i.donate_url ? `<a class="give" href="${esc(safeUrl(i.donate_url))}" target="_blank" rel="noopener">Donate on their official site</a> <span class="muted">link checked ${esc(fmtDate(i.verified_on))}</span>`
+      : `<div class="muted">Donation link not checked yet</div>`;
+    return `<li><b>${esc(i.name_en)}</b> <span class="badge">${esc(TYPE_NAMES[i.type] || i.type)}</span>${i.registration ? ` <span class="muted">${esc(i.registration)}</span>` : ""}
+      ${i.activity && !limit ? `<div class="small">${esc(i.activity)}</div>` : ""}<div class="muted">${seen}</div>${give}</li>`;
+  };
+  const list = items.length ? `<ul class="orgs">${items.map(item).join("")}</ul>`
+    : `<p class="small">No organisation has been confirmed working here yet.</p>`;
+  const more = limit && working.length > limit ? `<div class="muted">+${working.length - limit} more in Details</div>` : "";
+  const national = (b.national || []).length ? `<h3 style="margin:12px 0 4px">${esc(b.national_label)}</h3><ul class="orgs">${b.national.map(i => `<li><b>${esc(i.name_en)}</b> <span class="badge">${esc(TYPE_NAMES[i.type] || i.type)}</span>
+      <div><a class="give" href="${esc(safeUrl(i.donate_url))}" target="_blank" rel="noopener">Donate on their official site</a> <span class="muted">link checked ${esc(fmtDate(i.verified_on))}</span></div></li>`).join("")}</ul>` : "";
+  const unchecked = !working.some(i => i.donate_url) && !national ? `<p class="muted">No donation link has been checked for this place yet.</p>` : "";
+  return `<h3 style="margin:12px 0 4px">${head}</h3>${list}${more}${national}${unchecked}<p class="disclaimer">${esc(b.disclaimer)}</p>`;
 }
 
 // --- side panel ---------------------------------------------------------------------
@@ -339,6 +481,7 @@ function renderPanel() {
   el.innerHTML = state.area && BYID[state.area] ? areaPanel(BYID[state.area]) : overviewPanel();
   el.querySelectorAll("[data-area]").forEach(x => x.onclick = () => selectArea(x.dataset.area));
   el.querySelectorAll("[data-tab]").forEach(x => x.onclick = () => { state.newsTab = x.dataset.tab; renderPanel(); });
+  el.querySelectorAll("[data-more]").forEach(x => x.onclick = () => { state.newsLimit += 15; renderPanel(); });
   const back = el.querySelector(".back"); if (back) back.onclick = () => selectArea(null);
 }
 function ftsBlock() {
@@ -356,6 +499,43 @@ function ledgerRow(label, c, id) {
   if (!c) return `<tr${attr}><td>${label}</td><td class="num muted" colspan="3">no reviewed entries</td></tr>`;
   return `<tr${attr}><td>${label}</td><td class="num">${esc(fmtNPR(c.promised.npr))}</td><td class="num">${esc(fmtNPR(c.committed.npr))}</td><td class="num">${esc(fmtNPR(c.disbursed.npr))}</td></tr>`;
 }
+// Places with satellite damage, the least money named for them first.
+function gapPanel() {
+  const level = state.level === "settlement" ? "municipality" : state.level;   // towns have no satellite figures
+  const rows = PLACES.filter(p => p.level === level).map(p => ({p, g: gapInfo(WEEK, p.id)})).filter(x => x.g)
+    .sort((a, b) => (b.g.none - a.g.none) || (a.g.none ? b.g.destroyed - a.g.destroyed : a.g.perHome - b.g.perHome));
+  if (!rows.length) return `<h3>Most damage, least money</h3><p class="muted">No satellite damage figures for this week yet.</p>`;
+  const unlocated = WEEK.ledger.entries.filter(e => !["district", "municipality"].includes(e.geo_level)).length;
+  const orgCount = id => {
+    const b = WEEK.donate[id];
+    if (!b || !b.working.length) return `<span class="muted">0</span>`;
+    return b.working_scope === "here" ? b.working.length : `<span class="muted">${b.working.length} in ${esc(b.working_scope)}</span>`;
+  };
+  const body = rows.map(({p, g}) => `<tr class="click" data-area="${esc(p.id)}"><td>${esc(p.name_en)}${level !== "district" ? `<div class="muted">${esc(districtName(p))}</div>` : ""}</td>
+      <td class="num">${fmtInt(g.destroyed)}</td><td class="num">${g.none ? `<span class="muted">none</span>` : `${esc(fmtNPR(g.npr))}<div class="muted">${esc(fmtNPR(g.perHome))} per home</div>`}</td>
+      <td class="num wrap">${orgCount(p.id)}</td></tr>`).join("");
+  return `<h3>Most damage, least money · ${esc(level === "district" ? "districts" : "municipalities")}</h3>
+    <table class="gap"><thead><tr><th>Where</th><th class="num">Homes destroyed</th><th class="num">Committed money named here</th><th class="num">Orgs working here</th></tr></thead><tbody>${body}</tbody></table>
+    <p class="small">Choose a place to see the organisations working there and how to give.</p>
+    <div class="note"><b>How to read this.</b> Homes destroyed come from the Copernicus satellite survey, which covers four areas along the river, so places outside it are not listed.
+    Money is committed money in the reviewed ledger that names the place. ${unlocated} of ${WEEK.ledger.entries.length} reviewed entries name no single district or municipality, and are not counted here.
+    District money is never split among municipalities. A low figure means little money has been announced for a place, not that a shortfall has been measured.</div>`;
+}
+// Committed money split by what it is for, as a single bar with its values beside it.
+function phaseHTML(byPhase) {
+  if (!byPhase) return "";
+  const total = PHASES.reduce((t, k) => t + (byPhase[k] ? byPhase[k].npr : 0), 0);
+  if (!total) return `<p class="muted">No committed money to split by purpose yet.</p>`;
+  const shown = PHASES.filter(k => byPhase[k] && byPhase[k].npr > 0);
+  const pct = k => Math.round(byPhase[k].npr / total * 100);
+  return `<div class="phasebar" role="img" aria-label="Committed money by purpose">${shown.map(k => `<span style="flex:${byPhase[k].npr} 0 0;background:var(${PHASE_COLORS[k]})" title="${esc(PHASE_NAMES[k])}: ${esc(fmtNPR(byPhase[k].npr))}"></span>`).join("")}</div>
+    <div class="legend">${PHASES.map(k => `<span><span class="key sq" style="background:var(${PHASE_COLORS[k]})"></span>${esc(PHASE_NAMES[k])} ${byPhase[k] && byPhase[k].npr ? esc(fmtNPR(byPhase[k].npr)) + ` <span class="muted">(${pct(k)}%)</span>` : `<span class="muted">none</span>`}</span>`).join("")}</div>`;
+}
+function sumPhases(cells) {
+  const out = Object.fromEntries(PHASES.map(k => [k, {npr: 0, usd: 0}]));
+  for (const c of cells) for (const k of PHASES) if (c && c.by_phase && c.by_phase[k]) { out[k].npr += c.by_phase[k].npr; out[k].usd += c.by_phase[k].usd; }
+  return out;
+}
 function overviewPanel() {
   const led = WEEK.ledger, districts = PLACES.filter(p => p.level === "district");
   const rows = districts.map(p => ledgerRow(`${esc(p.name_en)} <span class="ne">${esc(p.name_ne)}</span>`, led.areas[p.id], p.id)).join("");
@@ -363,12 +543,17 @@ function overviewPanel() {
   const s = WEEK.meta.review_stats;
   const dmgRows = districts.filter(p => WEEK.damage.areas[p.id]).map(p => `<tr class="click" data-area="${esc(p.id)}"><td>${esc(p.name_en)}</td><td class="num">${fmtInt(WEEK.damage.areas[p.id].destroyed)}</td><td class="num">${fmtInt(WEEK.damage.areas[p.id].damaged)}</td></tr>`).join("");
   const n = WEEK.news.totals.week;
-  return `${ftsBlock()}
+  const allPhases = sumPhases([...districts.map(p => led.areas[p.id]), ...Object.values(led.not_location_specific)]);
+  return `${gapPanel()}
+    ${ftsBlock()}
     <h3>Place-specific money · reviewed news ledger</h3>
     ${led.entries.length ? "" : `<p class="small">No entries have been reviewed for this week yet. Announcements found in the news appear here only after a person has checked each one.</p>`}
     <table><thead><tr><th>Where</th><th class="num">Promised</th><th class="num">Committed</th><th class="num">Disbursed</th></tr></thead>
     <tbody>${rows}</tbody>${un ? `<tbody><tr><th colspan="4">Not location-specific</th></tr>${un}</tbody>` : ""}</table>
     <div class="note">FTS and the ledger overlap and measure different things — do not add them. Money for one district is never split among its municipalities.</div>
+    <h3>What the money is for · relief to rebuilding</h3>
+    ${phaseHTML(allPhases)}
+    <p class="small">All committed money in the reviewed ledger, including national money. Rebuilding (recovery and reconstruction): ${esc(fmtNPR(allPhases.recovery.npr + allPhases.reconstruction.npr))}.</p>
     <h3>Homes destroyed · satellite survey</h3>
     ${dmgRows ? `<table><thead><tr><th>District</th><th class="num">Destroyed</th><th class="num">Damaged</th></tr></thead><tbody>${dmgRows}</tbody></table>
     <p class="muted">${esc(WEEK.damage.measure)}; ${esc(WEEK.damage.source)}. Covers only the four surveyed areas along the river.</p>` : `<p class="muted">No satellite product published yet.</p>`}
@@ -376,40 +561,59 @@ function overviewPanel() {
     <p class="small">${n.en} English and ${n.ne} Nepali articles about the corridor.</p>
     ${newsList(WEEK.news.items, 8)}
     <h3>Review</h3>
-    <p class="small">${fmtInt(s.drafted)} money items drafted by a language model; ${fmtInt(s.approved)} approved, ${fmtInt(s.edited)} edited then approved, ${fmtInt(s.rejected)} rejected by a person.</p>`;
+    <p class="small">${fmtInt(s.drafted)} money items drafted by a language model; ${fmtInt(s.approved)} approved, ${fmtInt(s.edited)} edited then approved, ${fmtInt(s.rejected)} rejected by a person.${s.org_listings ? ` ${fmtInt(s.org_listings)} organisation listings approved by a person.` : ""}</p>`;
 }
 function entriesFor(id) {
   return WEEK.ledger.entries.filter(e => e.place_id === id || e.pcode === id || (e.pcode || "").slice(0, 6) === id);
 }
-function newsList(items, limit) {
-  const list = items.filter(i => i.lang === state.newsTab).slice(0, limit);
+function newsList(items, limit, more) {
+  const all = items.filter(i => i.lang === state.newsTab), list = all.slice(0, limit);
   const tabs = `<div class="tabs" role="group" aria-label="Language"><button data-tab="en" aria-pressed="${state.newsTab === "en"}">English</button> <button data-tab="ne" aria-pressed="${state.newsTab === "ne"}">नेपाली</button></div>`;
   if (!list.length) return tabs + `<p class="muted">No articles.</p>`;
-  return tabs + `<ul class="news">${list.map(i => `<li><a href="${esc(safeUrl(i.url))}" target="_blank" rel="noopener">${esc(i.title)}</a> <span class="muted">${esc(i.outlet)}, ${esc(fmtDate(i.published))}</span></li>`).join("")}</ul>`;
+  return tabs + `<ul class="news">${list.map(i => `<li><a href="${esc(safeUrl(i.url))}" target="_blank" rel="noopener">${esc(i.title)}</a> <span class="muted">${esc(i.outlet)}, ${esc(fmtDate(i.published))}</span></li>`).join("")}</ul>`
+    + (more && all.length > limit ? `<button class="more" data-more>Show more (${all.length - limit} left)</button>` : "");
+}
+// Every article about a place from the flood up to the chosen week, from
+// the week files already loaded (they all load in the background).
+function newsSoFar(id) {
+  const upto = INDEX.weeks.findIndex(w => w.week === state.week), seen = new Set(), out = [];
+  let missing = 0;
+  for (const w of INDEX.weeks.slice(0, upto + 1)) {
+    const d = cache[w.week];
+    if (!d) { missing++; continue; }
+    for (const i of d.news.items) if (i.places.includes(id) && !seen.has(i.article_id)) { seen.add(i.article_id); out.push(i); }
+  }
+  out.sort((a, b) => b.published.localeCompare(a.published) || a.article_id.localeCompare(b.article_id));
+  return {items: out, missing};
 }
 function areaPanel(p) {
   const c = WEEK.ledger.areas[p.id], d = WEEK.damage.areas[p.id], es = entriesFor(p.id);
-  const entries = es.map(e => `<div class="entry"><div><span class="amt">${esc(e.amount_text)}</span> <span class="badge">${esc(e.status)}</span>
+  const purpose = e => [PHASE_NAMES[e.phase] && e.phase !== "unspecified" ? PHASE_NAMES[e.phase] : "", SECTOR_NAMES[e.sector] || ""].filter(Boolean).join(" · ");
+  const news = newsSoFar(p.id);
+  const entries = es.map(e => `<div class="entry"><div><span class="amt">${esc(e.amount_text)}</span> <span class="badge">${esc(e.status)}</span>${purpose(e) ? ` <span class="badge">${esc(purpose(e))}</span>` : ""}
       <span class="small">${esc(fmtNPR(+e.amount_npr))} · ${esc(fmtUSD(+e.amount_usd))}</span></div>
       <div class="small">${esc(e.donor_name)} · ${esc(fmtDate(e.announced_on))}${e.amount_basis !== "total" ? " · " + esc(e.amount_basis.replace("_", " ")) : ""}${e.fts_flow_id ? " · also reported to FTS (flow " + esc(e.fts_flow_id) + ")" : ""}</div>
       ${e.sources.map(s => `<div class="excerpt">“${esc(s.excerpt)}” — <a href="${esc(safeUrl(s.url))}" target="_blank" rel="noopener">${esc(s.outlet)}</a></div>`).join("")}
       <span class="badge">LLM-extracted, human-reviewed</span></div>`).join("");
-  const items = WEEK.news.items.filter(i => i.places.includes(p.id));
   return `<button class="back">← All areas</button>
     <h2>${esc(p.name_en)} <span class="ne">${esc(p.name_ne)}</span></h2>
     <div class="muted">${esc(LEVEL_NAMES[p.level])}${p.level !== "district" ? ", " + esc(districtName(p)) + " district" : ""} · ${esc(p.id)}</div>
+    <h3>Damage and money</h3>${gapHTML(p, false)}
+    ${orgsHTML(p.id)}
     <h3>Reviewed money for this place</h3>
     ${c ? `<table><thead><tr><th></th><th class="num">NPR</th><th class="num">US$</th></tr></thead><tbody>
       ${["promised", "committed", "disbursed"].map(k => `<tr><td>${k[0].toUpperCase() + k.slice(1)}</td><td class="num">${esc(fmtNPR(c[k].npr))}</td><td class="num">${esc(fmtUSD(c[k].usd))}</td></tr>`).join("")}</tbody></table>
-      ${c.also_reported_to_fts_npr ? `<p class="small">Of which also reported to FTS: ${esc(fmtNPR(c.also_reported_to_fts_npr))}</p>` : ""}${entries}`
+      ${c.also_reported_to_fts_npr ? `<p class="small">Of which also reported to FTS: ${esc(fmtNPR(c.also_reported_to_fts_npr))}</p>` : ""}
+      <h3>What the money is for</h3>${phaseHTML(c.by_phase)}${entries}`
       : `<p class="small">No reviewed entries for this place by ${esc(fmtDate(WEEK.meta.data_cutoff))}.</p>`}
     <div class="note"><b>National — not attributable to this area.</b> OCHA FTS records ${esc(fmtUSD(WEEK.fts.funded_usd.total))} funded against the appeal for Nepal as a whole. It is not part of this place's total.</div>
     <h3>Homes destroyed · satellite survey</h3>
     ${d ? `<p><span class="stat">${fmtInt(d.destroyed)}</span> <span class="small">destroyed, ${fmtInt(d.damaged)} damaged, ${fmtInt(d.possibly)} possibly damaged</span></p>
       <p class="muted">Latest products by ${esc(fmtDate(WEEK.meta.data_cutoff))}: ${WEEK.damage.products.map(x => esc(x.name) + " (" + esc(x.product) + ", " + esc(fmtDate(x.product_date)) + ")").join("; ")}.</p>`
       : `<p class="muted">Outside the four satellite survey areas.</p>`}
-    ${donateHTML(p.id)}
-    <h3>News this week</h3>${newsList(items, 40)}`;
+    <h3>News so far · since the flood</h3>
+    <p class="muted">${fmtInt(news.items.length)} articles up to ${esc(fmtDate(WEEK.meta.data_cutoff))}${news.missing ? `; ${news.missing} earlier week${news.missing === 1 ? "" : "s"} still loading` : ""}.</p>
+    ${newsList(news.items, state.newsLimit, true)}`;
 }
 
 // --- timeline -------------------------------------------------------------------------
@@ -444,14 +648,16 @@ function drawTimeline() {
   }
   el("line", {x1: m.l, x2: W - m.r, y1: y(req), y2: y(req), stroke: css("--muted"), "stroke-width": 1}, svg);
   const rl = el("text", {x: W - m.r + 6, y: y(req) + 4}, svg); rl.textContent = "Appeal " + fmtUSD(req);
-  const series = [["--s1", w => w.summary.fts_funded_usd, "FTS funded"], ["--s2", w => w.summary.ledger_usd.committed, "Ledger committed"]];
+  const rebuilt = w => w.summary.ledger_rebuilding_usd || 0;
+  const series = [["--s1", w => w.summary.fts_funded_usd, "FTS funded"], ["--s2", w => w.summary.ledger_usd.committed, "Ledger committed"],
+    ["--ph-recon", rebuilt, "Rebuilding"]];
   for (const [color, f, label] of series) {
     el("polyline", {points: weeks.map((w, i) => `${x(i)},${y(f(w))}`).join(" "), fill: "none", stroke: css(color), "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round"}, svg);
     weeks.forEach((w, i) => el("circle", {cx: x(i), cy: y(f(w)), r: i === sel ? 5 : 3.5, fill: css(color), stroke: css("--surface"), "stroke-width": 2}, svg));
     const last = weeks.length - 1, t = el("text", {x: W - m.r + 6, y: y(f(weeks[last])) + 4}, svg);
     t.textContent = (W < 520 ? "" : label + " ") + fmtUSD(f(weeks[last]));   // the legend names the lines
   }
-  hitColumns(svg, weeks, m, band, H, w => `<b>${esc(weekLabel(w.week))}</b><br>FTS funded: ${esc(fmtUSD(w.summary.fts_funded_usd))}<br>Ledger committed: ${esc(fmtUSD(w.summary.ledger_usd.committed))}<br><span class="muted">Appeal: ${esc(fmtUSD(w.summary.requirement_usd))}</span>`);
+  hitColumns(svg, weeks, m, band, H, w => `<b>${esc(weekLabel(w.week))}</b><br>FTS funded: ${esc(fmtUSD(w.summary.fts_funded_usd))}<br>Ledger committed: ${esc(fmtUSD(w.summary.ledger_usd.committed))}<br>Of which rebuilding: ${esc(fmtUSD(rebuilt(w)))}<br><span class="muted">Appeal: ${esc(fmtUSD(w.summary.requirement_usd))}</span>`);
   // panel 2: articles per week, English and Nepali stacked
   const svg2 = $("chart-news"), H2 = 130; svg2.innerHTML = ""; svg2.setAttribute("viewBox", `0 0 ${W} ${H2}`); hatchDefs(svg2);
   const nMax = Math.max(1, ...weeks.map(w => w.summary.articles_week.en + w.summary.articles_week.ne)) * 1.1;
@@ -538,20 +744,24 @@ function scrubTo(w) {
 // Fetch every week in the background so dragging never waits for the network.
 async function preloadAll() {
   for (const w of INDEX.weeks) { try { await loadWeek(w.week); } catch (e) { console.warn(e); } }
+  if (state.area) renderPanel();   // "News so far" can now cover every week
 }
 function selectArea(id) {
-  state.area = id; renderPanel(); syncControls(); boundaryLayer.setStyle(boundaryStyle);
+  state.area = id; state.newsLimit = 15; renderPanel(); syncControls(); boundaryLayer.setStyle(boundaryStyle);
   const p = id && BYID[id]; if (p) { map.closePopup(); map.panTo([p.lat, p.lon]); }
 }
 function downloadCSV() {
   const cols = ["id", "name_en", "name_ne", "level", "district", "promised_npr", "committed_npr", "disbursed_npr",
-    "promised_usd", "committed_usd", "disbursed_usd", "reviewed_entries", "homes_destroyed", "articles_this_week", "articles_to_date"];
+    "promised_usd", "committed_usd", "disbursed_usd", "reviewed_entries", "rebuilding_committed_npr", "homes_destroyed",
+    "npr_per_home_destroyed", "orgs_working", "articles_this_week", "articles_to_date"];
   const rows = PLACES.filter(p => p.level === state.level).map(p => {
     const c = WEEK.ledger.areas[p.id], d = WEEK.damage.areas[p.id], nw = WEEK.news.this_week[p.id], nt = WEEK.news.to_date[p.id];
+    const g = gapInfo(WEEK, p.id), b = WEEK.donate[p.id];
     return [p.id, p.name_en, p.name_ne, p.level, districtName(p),
       c ? c.promised.npr : "", c ? c.committed.npr : "", c ? c.disbursed.npr : "",
-      c ? c.promised.usd : "", c ? c.committed.usd : "", c ? c.disbursed.usd : "", c ? c.n_entries : 0,
-      d ? d.destroyed : "", nw ? nw.en + nw.ne : 0, nt ? nt.en + nt.ne : 0];
+      c ? c.promised.usd : "", c ? c.committed.usd : "", c ? c.disbursed.usd : "", c ? c.n_entries : 0, c ? rebuildingNPR(c) : "",
+      d ? d.destroyed : "", g ? Math.round(g.perHome) : "", b && b.working_scope === "here" ? b.working.length : 0,
+      nw ? nw.en + nw.ne : 0, nt ? nt.en + nt.ne : 0];
   });
   const q = v => `"${String(v).replace(/"/g, '""')}"`;
   const text = "﻿" + [cols, ...rows].map(r => r.map(q).join(",")).join("\r\n");
@@ -564,7 +774,11 @@ function renderFooter() {
   $("footer").innerHTML = `<p><b>Sources.</b> National funding: <a href="https://fts.unocha.org/plans/${esc(WEEK.fts.plan_id)}/summary" target="_blank" rel="noopener">OCHA Financial Tracking Service</a>.
     Damage: Copernicus Emergency Management Service EMSR927 (CC BY 4.0, © European Union). Boundaries: OCHA COD-AB Nepal (CC BY-IGO); Nepali place names: BIPAD portal.
     Town locations and basemap: © OpenStreetMap contributors (ODbL). Exchange rates: Nepal Rastra Bank. News: links to the original publishers; headlines only.</p>
-    <p><b>Method.</b> Money announcements are found in English and Nepali news, drafted by a language model with every quote checked word for word against the article, and approved one by one by a person. Amounts are parsed by code, never by the model. Published weeks are never rewritten; corrections are listed separately.</p>`;
+    <p><b>Method.</b> Money announcements are found in English and Nepali news, drafted by a language model with every quote checked word for word against the article, and approved one by one by a person. Amounts are parsed by code, never by the model. Published weeks are never rewritten; corrections are listed separately.</p>
+    <p><b>Organisations.</b> An organisation is listed under a place only when a reviewed source shows it working there, and a person approves each listing.
+    A donation link appears only after a person has opened the organisation's own page and checked it. Links are never taken from social media, crowdfunding pages, messaging apps or bank details in the news.</p>
+    <p><b>Damage vs money.</b> This sets homes destroyed in the Copernicus satellite survey against committed money in the reviewed ledger that names the same place.
+    It shows where little money has been announced; it does not measure unmet need, and places outside the four surveyed areas cannot be compared.</p>`;
 }
 
 async function init() {
@@ -576,7 +790,7 @@ async function init() {
   state.week = weeks.includes(q.get("week")) ? q.get("week") : (closed.length ? closed[closed.length - 1] : INDEX.weeks[INDEX.weeks.length - 1]).week;
   state.level = LEVEL_NAMES[q.get("level")] ? q.get("level") : "district";
   LATEST = await loadWeek(weeks[weeks.length - 1]);
-  state.metric = METRICS[q.get("metric")] ? q.get("metric") : (LATEST.ledger.entries.length ? "committed" : "damage");
+  state.metric = METRICS[q.get("metric")] ? q.get("metric") : "gap";
   state.area = BYID[q.get("area")] ? q.get("area") : null;
   $("week-select").innerHTML = INDEX.weeks.map(w => `<option value="${esc(w.week)}">${esc(weekLabel(w.week))}</option>`).join("");
   $("week-range").max = INDEX.weeks.length - 1;
@@ -585,7 +799,7 @@ async function init() {
   $("prev").onclick = () => setWeek(INDEX.weeks[Math.max(0, weeks.indexOf(state.week) - 1)].week);
   $("next").onclick = () => setWeek(INDEX.weeks[Math.min(weeks.length - 1, weeks.indexOf(state.week) + 1)].week);
   $("metric").onchange = e => { state.metric = e.target.value; syncControls(); drawBubbles(); };
-  $("level").onchange = e => { state.level = e.target.value; syncControls(); drawBubbles(); };
+  $("level").onchange = e => setLevel(e.target.value);
   $("copy-link").onclick = async () => { await navigator.clipboard.writeText(location.href); $("copy-link").textContent = "Copied ✓"; setTimeout(() => $("copy-link").textContent = "Copy link", 1500); };
   $("csv").onclick = downloadCSV;
   initMap();

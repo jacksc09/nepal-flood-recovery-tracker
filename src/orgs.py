@@ -3,6 +3,8 @@
 Donation scams rise after every disaster, so the rules are strict:
   * A listing needs EVIDENCE that the organisation works in that place (a
     reviewed news excerpt or the organisation's own report), with a date.
+    Once Jack approves the evidence, the organisation is listed for that
+    place ("working here"), with or without a donation link.
   * A link is shown only after Jack has opened it and confirmed it
     (verified_on in data/orgs/orgs.csv), and only if it is https, on the
     organisation's own domain or an official one (gov.np, UN agencies,
@@ -10,8 +12,9 @@ Donation scams rise after every disaster, so the rules are strict:
     messaging link, a link shortener, or an image (QR codes).
   * A link the weekly check (check_links.py) finds dead is hidden.
   * Evidence older than 12 weeks shows "last seen active", not "active".
-  * A place with no verified local listing shows a clearly labelled
-    national block instead.
+  * A place with no evidence of its own shows its municipality's or
+    district's list, labelled as such; while no listed organisation has a
+    checked link, a clearly labelled national block is shown as well.
   * No ranking: most recent evidence first, with the organisation type.
 
 Data (append/correct-only, like the ledger):
@@ -95,57 +98,100 @@ def url_problems(url: str, org: dict) -> list:
     return problems + domain_problems(org)
 
 
-def listing_problems(listing: dict, org: dict) -> list:
+def listing_problems(listing: dict) -> list:
+    """Every reason an approved listing may not be shown at all (its evidence)."""
     problems = []
     ev = listing.get("evidence") or {}
     for key in ("url", "date", "excerpt"):
         if not ev.get(key):
             problems.append(f"evidence has no {key}")
-    if len((ev.get("excerpt") or "").split()) > MAX_EXCERPT_WORDS:
+    # The review app trims long quotes to 25 words and marks the cut with "…",
+    # which is not a word of the quote.
+    if len([w for w in (ev.get("excerpt") or "").split() if w != "…"]) > MAX_EXCERPT_WORDS:
         problems.append(f"evidence excerpt is over {MAX_EXCERPT_WORDS} words")
-    if not org.get("verified_on"):
-        problems.append("donation link not yet verified by hand")
-    problems += url_problems(org.get("donate_url") or "", org)
     return problems
 
 
+def link_problems(org: dict) -> list:
+    """Every reason an organisation's donation link may not be shown."""
+    problems = []
+    if not org.get("verified_on"):
+        problems.append("donation link not yet verified by hand")
+    if org.get("link_status") == "dead":
+        problems.append("the weekly link check found the page dead")
+    return problems + url_problems(org.get("donate_url") or "", org)
+
+
 def _shown(org: dict) -> bool:
-    return bool(org.get("verified_on")) and org.get("link_status") != "dead" \
-        and not url_problems(org.get("donate_url") or "", org)
+    return not link_problems(org)
 
 
 def _item(org: dict, listing: dict = None, as_of: date = None) -> dict:
     item = {"org_id": org["org_id"], "name_en": org["name_en"],
             "name_ne": org.get("name_ne", ""), "type": org["type"],
-            "registration": org.get("registration", ""), "donate_url": org["donate_url"],
-            "verified_on": org["verified_on"]}
+            "registration": org.get("registration", "")}
+    if _shown(org):   # the link only after Jack has opened and confirmed it
+        item.update(donate_url=org["donate_url"], verified_on=org["verified_on"])
     if listing:
         ev = listing["evidence"]
         old = date.fromisoformat(ev["date"]) < as_of - timedelta(weeks=FRESH_WEEKS)
-        item.update(evidence_url=ev["url"], evidence_date=ev["date"],
+        activity = " ".join((listing.get("activity") or "").split()[:MAX_EXCERPT_WORDS])
+        item.update(place_id=listing["place_id"], activity=activity,
+                    evidence_url=ev["url"], evidence_date=ev["date"],
                     freshness="last_seen" if old else "active")
     return item
 
 
-def donate_block(place_id: str, listings: list, orgs_by_id: dict, as_of: date) -> dict:
-    """What a place's 'Where to donate' list shows on a given date."""
-    best = {}
-    for l in listings:
-        org = orgs_by_id.get(l["org_id"])
-        if l["place_id"] != place_id or not org or listing_problems(l, org) or not _shown(org):
-            continue
-        if l["evidence"]["date"] > as_of.isoformat():
-            continue
-        if l["org_id"] not in best or l["evidence"]["date"] > best[l["org_id"]]["evidence"]["date"]:
-            best[l["org_id"]] = l
-    if best:
+def donate_block(place_id: str, listings: list, orgs_by_id: dict, as_of: date,
+                 chains: dict = None) -> dict:
+    """What a place's list of organisations shows on a given date.
+
+    Two tiers:
+      working   organisations with reviewed evidence of working in the place,
+                listed as soon as Jack approves the evidence; each carries a
+                donate link only once Jack has checked it.
+      national  the labelled national block (organisations with checked
+                links marked national_fallback), shown when nothing in
+                'working' has a link.
+
+    chains maps each place to itself and the larger areas it sits in
+    (town -> municipality -> district), like the money roll-up: evidence in
+    a town also counts for its municipality and district, never the other
+    way. A place with no evidence of its own shows its municipality's or
+    district's list, labelled as such (working_scope).
+    """
+    chains = chains or {}
+
+    def chain(pid):
+        return chains.get(pid) or [pid]
+
+    usable = [l for l in listings if l["org_id"] in orgs_by_id and not listing_problems(l)
+              and l["evidence"]["date"] <= as_of.isoformat()]
+
+    def working_in(area):
+        best = {}
+        for l in usable:
+            if area not in chain(l["place_id"]):
+                continue
+            if l["org_id"] not in best or l["evidence"]["date"] > best[l["org_id"]]["evidence"]["date"]:
+                best[l["org_id"]] = l
         items = [_item(orgs_by_id[oid], l, as_of) for oid, l in best.items()]
-        items.sort(key=lambda i: i["evidence_date"], reverse=True)   # recency, not ranking
-        return {"kind": "local", "items": items, "disclaimer": DISCLAIMER}
+        items.sort(key=lambda i: (i["evidence_date"], i["org_id"]), reverse=True)   # recency, not ranking
+        return items
+
+    scope, area, working = "none", None, []
+    for n, a in enumerate(chain(place_id)):
+        working = working_in(a)
+        if working:
+            scope, area = ("here" if n == 0 else "municipality" if len(a) == 9 else "district"), a
+            break
     national = [_item(o) for o in orgs_by_id.values()
                 if o.get("national_fallback") == "yes" and _shown(o)]
-    return {"kind": "national_fallback", "label": FALLBACK_LABEL,
-            "items": sorted(national, key=lambda i: i["name_en"]), "disclaimer": DISCLAIMER}
+    has_link = any(i.get("donate_url") for i in working)
+    return {"working_scope": scope, "working_area": area, "working": working,
+            "national_label": FALLBACK_LABEL,
+            "national": [] if has_link else sorted(national, key=lambda i: i["name_en"]),
+            "disclaimer": DISCLAIMER}
 
 
 def load_orgs() -> dict:

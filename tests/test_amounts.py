@@ -38,6 +38,21 @@ import amounts
     ("५० लाख अष्ट्रेलियन डलर", 5_000_000, "AUD"),   # Nepali spellings vary
     ("१ लाख क्यानेडियन डलर", 100_000, "CAD"),
     ("२ लाख अमेरिकन डलर", 200_000, "USD"),
+    ("५ मिलियन अमेरिकी डलर", 5_000_000, "USD"),       # English units written in Nepali
+    ("KRW 130 million", 130_000_000, "KRW"),
+    ("13 करोड कोरियाली वन", 130_000_000, "KRW"),
+    ("MYR 50,000", 50_000, "MYR"),
+    ("NZ$2 million", 2_000_000, "NZD"),
+    ("2 million New Zealand dollars", 2_000_000, "NZD"),
+    ("एकलाख रुपैयाँ", 100_000, "NPR"),                # number word written joined to its unit
+    ("६५ सय पाउण्ड", 6_500, "GBP"),
+    ("१ हजार ५०० पाउण्ड", 1_500, "GBP"),
+    ("3.5 million Danish kroner", 3_500_000, "DKK"),
+    ("SGD 20,000", 20_000, "SGD"),
+    ("CZK 2 million", 2_000_000, "CZK"),
+    ("NOK 5 million", 5_000_000, "NOK"),
+    ("5 million Norwegian kroner", 5_000_000, "NOK"),
+    ("१.५ बिलियन रुपैयाँ", 1_500_000_000, "NPR"),
     ("€2 million", 2_000_000, "EUR"),
     ("£1m", 1_000_000, "GBP"),
     ("10 million yuan", 10_000_000, "CNY"),
@@ -95,7 +110,13 @@ def test_a_repeated_number_means_each_not_a_range():
     "गुरु ५",                          # रु inside a word is not "Rs"
     "Rs 5 crore 2026",                # a stray year is not part of the amount
     "५ लाख ५ रुपैयाँ",                 # a plain number may only follow thousands or hundreds
+    "५ मिलियन",                        # million is not a South Asian unit: no currency, no guess
 ])
 def test_refuses_what_it_cannot_parse_with_certainty(text):
     with pytest.raises(amounts.AmountError):
         amounts.parse_amount(text)
+
+
+def test_paisa_are_hundredths_of_a_rupee():
+    assert amounts.parse_amount("२७ लाख ६६ हजार ४ सय ७४ रुपैयाँ ६७ पैसा") == \
+        (Decimal("2766474.67"), "NPR")

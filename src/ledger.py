@@ -22,6 +22,9 @@ The totalling rules, which keep the numbers honest:
      was computed from a count given in the evidence.
   5. OCHA FTS money is never added to anything here. A link to an FTS
      flow is reported alongside ("also reported to FTS"), nothing more.
+  6. What the money is for: each cell also splits its Committed column by
+     phase (relief / recovery / reconstruction), taking each stream's phase
+     from its firmest entry, so the split always adds up to Committed.
 """
 
 import copy
@@ -37,6 +40,8 @@ CORRECTIONS_JSONL = LEDGER_DIR / "corrections.jsonl"
 STAGES = ["announced", "pledged", "committed", "disbursed"]   # weakest -> firmest
 COLUMNS = {"promised": "announced", "committed": "committed", "disbursed": "disbursed"}
 UNLOCATED_LEVELS = ("province", "corridor", "national")
+PHASES = ["relief", "recovery", "reconstruction", "unspecified"]
+REBUILDING_PHASES = ("recovery", "reconstruction")
 
 
 def _read_jsonl(path) -> list:
@@ -45,12 +50,14 @@ def _read_jsonl(path) -> list:
     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line]
 
 
-def load_ledger(path=LEDGER_JSONL) -> list:
-    return _read_jsonl(path)
+def load_ledger(path=None) -> list:
+    # The path is looked up when called (not when this file loads), so a test
+    # can point it at a temporary folder.
+    return _read_jsonl(path or LEDGER_JSONL)
 
 
-def load_corrections(path=CORRECTIONS_JSONL) -> list:
-    return _read_jsonl(path)
+def load_corrections(path=None) -> list:
+    return _read_jsonl(path or CORRECTIONS_JSONL)
 
 
 def apply_corrections(entries: list, corrections: list, made_by: date = None) -> list:
@@ -81,7 +88,8 @@ def _area_keys(e: dict) -> list:
 
 def _empty_cell() -> dict:
     cell = {col: {"npr": Decimal(0), "usd": Decimal(0)} for col in COLUMNS}
-    cell.update(n_entries=0, also_reported_to_fts_npr=Decimal(0))
+    cell.update(n_entries=0, also_reported_to_fts_npr=Decimal(0),
+                by_phase={ph: {"npr": Decimal(0), "usd": Decimal(0)} for ph in PHASES})
     return cell
 
 
@@ -116,10 +124,14 @@ def totals_as_of(entries: list, week_end: date) -> dict:
                 top = max(reached, key=lambda e: Decimal(e["amount_npr"]))
                 values[col] = (Decimal(top["amount_npr"]), Decimal(top["amount_usd"]))
         in_fts = any(e.get("fts_flow_id") for e in money)
+        phase = lead.get("phase") if lead.get("phase") in PHASES else "unspecified"
         for cell in cells:
             for col, (n, u) in values.items():
                 cell[col]["npr"] += n
                 cell[col]["usd"] += u
+            if "committed" in values:
+                cell["by_phase"][phase]["npr"] += values["committed"][0]
+                cell["by_phase"][phase]["usd"] += values["committed"][1]
             cell["n_entries"] += len(money)
             if in_fts:
                 cell["also_reported_to_fts_npr"] += values["promised"][0]

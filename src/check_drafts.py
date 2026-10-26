@@ -223,6 +223,9 @@ def write_queue(week: str, index: dict, best: dict) -> int:
             dropped_log.extend({"article_id": aid, **{k: str(v) for k, v in d.items()}}
                                for d in res.dropped)
     from draft_packet import packet_dir
+    # Marker read by publish_week.py: this week's drafts passed and were queued.
+    (packet_dir(week) / "queued.json").write_text(json.dumps(
+        {"week": week, "items_added_this_run": added}, indent=1) + "\n")
     (packet_dir(week) / "dropped.jsonl").write_text(
         "".join(json.dumps(d, ensure_ascii=False) + "\n" for d in dropped_log), encoding="utf-8")
     return added

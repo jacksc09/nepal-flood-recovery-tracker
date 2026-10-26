@@ -52,8 +52,9 @@ SECTORS = ["shelter_housing", "cash_multipurpose", "food", "wash", "health", "ed
            "roads_bridges", "hydropower_energy", "livelihoods_agriculture", "protection",
            "multi_sector", "unspecified"]
 PHASES = ["relief", "recovery", "reconstruction", "unspecified"]
-CURRENCY_HINTS = ["NPR", "USD", "AUD", "CAD", "EUR", "GBP", "CHF", "CNY", "JPY", "INR",
-                  "unknown"]
+CURRENCY_HINTS = ["NPR", "USD", "AUD", "CAD", "NZD", "EUR", "GBP", "CHF", "CNY", "JPY", "INR",
+                  "KRW", "MYR", "DKK", "SEK", "SGD", "HKD", "AED", "SAR", "QAR", "THB", "KWD",
+                  "CZK", "NOK", "unknown"]
 CONFIDENCE = ["high", "medium", "low"]
 ORG_TYPES = ["local_ngo", "national_ngo", "international_ngo", "un_agency",
              "red_cross_movement", "government_fund", "other"]
@@ -152,9 +153,16 @@ in one article is ONE entry). Record:
   entry for each place, each with the same amount_text and excerpt. If one
   amount is shared by several places without saying how, write ONE entry
   with place_as_written null and geo_hint corridor. Never divide amounts.
+- If an article gives a TOTAL and also lists the parts that make it up
+  (e.g. "Rs 3 crore in all: Rs 1 crore each to Rasuwa, Nuwakot and
+  Dhading"), record only the parts. Record the total only when the parts
+  are not given. Never record both: that counts the same money twice.
 - place_as_written: the most specific corridor place the money is FOR,
   exactly as written (e.g. "Gosaikunda", "रसुवा", "Syabrubesi"), or null
   if it is for the flood response in general or for a national fund.
+  It is where the money GOES, never where the donor is from: "Syangja
+  municipalities donate to the Prime Minister's fund" has no place
+  (national), and so does a gift from "a bank in Biratnagar".
   geo_hint: municipality, district, province, corridor (several corridor
   districts or "flood-affected areas"), or national (e.g. the Prime
   Minister's relief fund).
