@@ -1,0 +1,32 @@
+{
+ "preview": false,
+ "built_at": "2026-10-26T15:15:55Z",
+ "weeks": [
+  {
+   "week": "2026-W35",
+   "file": "2026-W35.json",
+   "sha256": "13b24418637f991690401dc66b22a963fd8fbd61c91c55e50f7929b29d5b6b55",
+   "kind": "reconstructed",
+   "open_week": false,
+   "preview": false,
+   "built_at": "2026-10-26T15:15:55Z",
+   "summary": {
+    "fts_funded_usd": 0.0,
+    "fts_out_of_plan_in_scope_usd": 0.0,
+    "requirement_usd": 49568000,
+    "ledger_usd": {
+     "promised": 349773109.0,
+     "committed": 136155519.0,
+     "disbursed": 77458223.0
+    },
+    "ledger_rebuilding_usd": 0.0,
+    "ledger_entries": 157,
+    "articles_week": {
+     "en": 610,
+     "ne": 533
+    },
+    "homes_destroyed": 2282
+   }
+  }
+ ]
+}

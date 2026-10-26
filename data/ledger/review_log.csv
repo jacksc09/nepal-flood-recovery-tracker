@@ -1,0 +1,403 @@
+item_id,kind,decision,reason,entry_id,reviewed_on
+2026-W35:00e7e972f4f9:e1,ledger,approved,,L-000001,2026-10-10
+2026-W35:0170286e011d:e1,ledger,approved,,L-000002,2026-10-10
+2026-W35:0170286e011d:e2,ledger,approved,,L-000003,2026-10-10
+2026-W35:0170286e011d:e3,ledger,approved,,L-000004,2026-10-10
+2026-W35:0170286e011d:e4,ledger,approved,,L-000005,2026-10-10
+2026-W35:0170286e011d:e5,ledger,approved,,L-000006,2026-10-10
+2026-W35:0170286e011d:e6,ledger,approved,,L-000007,2026-10-10
+2026-W35:0170286e011d:e7,ledger,approved,,L-000008,2026-10-10
+2026-W35:029c7eaf3ba5:e1,ledger,approved,,L-000009,2026-10-10
+2026-W35:045ba5b0289d:e1,ledger,approved,,L-000010,2026-10-10
+2026-W35:05a6e114faf3:e1,ledger,approved,,L-000011,2026-10-10
+2026-W35:e3aec5faf00c:e3,ledger,approved,,L-000012,2026-10-10
+2026-W35:4dea2cc99461:e3,ledger,approved,,L-000013,2026-10-10
+2026-W35:43677ccb1a8c:e3,ledger,approved,,L-000014,2026-10-10
+2026-W35:4cf76de17afc:e3,ledger,approved,,L-000015,2026-10-10
+2026-W35:53904007cf2f:e3,ledger,approved,,L-000016,2026-10-10
+2026-W35:0b5622c84158:e3,ledger,approved,,L-000017,2026-10-10
+2026-W35:e3fcf2e6c74a:e3,ledger,approved,,L-000018,2026-10-10
+2026-W35:9bda46b6cba6:e3,ledger,approved,,L-000019,2026-10-10
+2026-W35:e3aec5faf00c:e1,ledger,approved,,L-000020,2026-10-10
+2026-W35:e3aec5faf00c:e2,ledger,approved,,L-000021,2026-10-10
+2026-W35:4dea2cc99461:e1,ledger,approved,,L-000022,2026-10-10
+2026-W35:4dea2cc99461:e2,ledger,approved,,L-000023,2026-10-10
+2026-W35:43677ccb1a8c:e1,ledger,approved,,L-000024,2026-10-10
+2026-W35:43677ccb1a8c:e2,ledger,approved,,L-000025,2026-10-10
+2026-W35:4cf76de17afc:e1,ledger,approved,,L-000026,2026-10-10
+2026-W35:4cf76de17afc:e2,ledger,approved,,L-000027,2026-10-10
+2026-W35:53904007cf2f:e1,ledger,approved,,L-000028,2026-10-10
+2026-W35:53904007cf2f:e2,ledger,approved,,L-000029,2026-10-10
+2026-W35:0b5622c84158:e1,ledger,approved,,L-000030,2026-10-10
+2026-W35:0b5622c84158:e2,ledger,approved,,L-000031,2026-10-10
+2026-W35:e3fcf2e6c74a:e1,ledger,approved,,L-000032,2026-10-10
+2026-W35:e3fcf2e6c74a:e2,ledger,approved,,L-000033,2026-10-10
+2026-W35:9bda46b6cba6:e1,ledger,approved,,L-000034,2026-10-10
+2026-W35:9bda46b6cba6:e2,ledger,approved,,L-000035,2026-10-10
+2026-W35:128baf108964:e7,ledger,approved,,L-000036,2026-10-10
+2026-W35:8f949c495fcc:e2,ledger,approved,,L-000037,2026-10-10
+2026-W35:9cea48790095:e1,ledger,approved,,L-000038,2026-10-10
+2026-W35:9bda46b6cba6:e4,ledger,approved,,L-000039,2026-10-10
+2026-W35:2ab4d6bab7b6:e24,ledger,approved,,L-000040,2026-10-10
+2026-W35:e010ca7f9caf:e1,ledger,approved,,L-000041,2026-10-10
+2026-W35:2ed1b4a78ba5:e1,ledger,approved,,L-000042,2026-10-10
+2026-W35:99b2e361de83:e1,ledger,approved,,L-000043,2026-10-10
+2026-W35:8db30561f5a3:e8,ledger,approved,,L-000044,2026-10-10
+2026-W35:61fbd9729f6e:e5,ledger,edited,,L-000045,2026-10-10
+2026-W35:bd0305ddc303:e1,ledger,approved,,L-000046,2026-10-10
+2026-W35:29da1f67b1de:e1,ledger,approved,,L-000047,2026-10-10
+2026-W35:b1c41466dd57:e2,ledger,approved,,L-000048,2026-10-10
+2026-W35:2ab4d6bab7b6:e3,ledger,approved,,L-000049,2026-10-10
+2026-W35:e3fcf2e6c74a:e6,ledger,approved,,L-000050,2026-10-10
+2026-W35:2ab4d6bab7b6:e6,ledger,approved,,L-000051,2026-10-10
+2026-W35:2ab4d6bab7b6:e15,ledger,approved,,L-000052,2026-10-10
+2026-W35:5686322938a3:e1,ledger,approved,,L-000053,2026-10-10
+2026-W35:f242f0cc0fc4:e1,ledger,approved,,L-000054,2026-10-10
+2026-W35:628f9f780b7f:e4,ledger,approved,,L-000055,2026-10-10
+2026-W35:88b1971a26a2:e3,ledger,edited,,L-000056,2026-10-10
+2026-W35:bd3536ba140a:e6,ledger,approved,,L-000057,2026-10-10
+2026-W35:128baf108964:e4,ledger,approved,,L-000058,2026-10-10
+2026-W35:8f949c495fcc:e6,ledger,approved,,L-000059,2026-10-10
+2026-W35:2ab4d6bab7b6:e7,ledger,approved,,L-000060,2026-10-10
+2026-W35:d5c71b68be8a:e2,ledger,edited,,L-000061,2026-10-10
+2026-W35:435cbffd0990:e5,ledger,approved,,L-000062,2026-10-10
+2026-W35:bd0305ddc303:e5,ledger,approved,,L-000063,2026-10-10
+2026-W35:d5c71b68be8a:e1,ledger,approved,,L-000064,2026-10-10
+2026-W35:435cbffd0990:e4,ledger,approved,,L-000065,2026-10-10
+2026-W35:518c04def962:e4,ledger,approved,,L-000066,2026-10-10
+2026-W35:0aa5bb0486ef:e4,ledger,approved,,L-000067,2026-10-10
+2026-W35:29d1d90cfb83:e1,ledger,approved,,L-000068,2026-10-10
+2026-W35:2ab4d6bab7b6:e18,ledger,approved,,L-000069,2026-10-10
+2026-W35:b1c41466dd57:e1,ledger,approved,,L-000070,2026-10-10
+2026-W35:435cbffd0990:e8,ledger,approved,,L-000071,2026-10-10
+2026-W35:0aa5bb0486ef:e6,ledger,approved,,L-000072,2026-10-10
+2026-W35:de5c3c26b277:e1,ledger,approved,,L-000073,2026-10-10
+2026-W35:bd0305ddc303:e4,ledger,approved,,L-000074,2026-10-10
+2026-W35:4106d9b73db6:e1,ledger,approved,,L-000075,2026-10-10
+2026-W35:0fb7417b4682:e3,ledger,approved,,L-000076,2026-10-10
+2026-W35:0fb7417b4682:e1,ledger,approved,,L-000077,2026-10-10
+2026-W35:0fb7417b4682:e2,ledger,approved,,L-000078,2026-10-10
+2026-W35:aadb9f76ccde:e1,ledger,approved,,L-000079,2026-10-10
+2026-W35:435cbffd0990:e1,ledger,approved,,L-000080,2026-10-10
+2026-W35:2ab4d6bab7b6:e17,ledger,approved,,L-000081,2026-10-10
+2026-W35:8f949c495fcc:e8,ledger,approved,,L-000082,2026-10-10
+2026-W35:99c7e3efa9db:e5,ledger,approved,,L-000083,2026-10-10
+2026-W35:99c7e3efa9db:e3,ledger,approved,,L-000084,2026-10-10
+2026-W35:99c7e3efa9db:e4,ledger,approved,,L-000085,2026-10-10
+2026-W35:99c7e3efa9db:e2,ledger,approved,,L-000086,2026-10-10
+2026-W35:99c7e3efa9db:e1,ledger,approved,,L-000087,2026-10-10
+2026-W35:128baf108964:e6,ledger,approved,,L-000088,2026-10-10
+2026-W35:8f949c495fcc:e4,ledger,approved,,L-000089,2026-10-10
+2026-W35:8f949c495fcc:e7,ledger,approved,,L-000090,2026-10-10
+2026-W35:128baf108964:e8,ledger,approved,,L-000091,2026-10-10
+2026-W35:bd3536ba140a:e3,ledger,approved,,L-000092,2026-10-10
+2026-W35:bd3536ba140a:e2,ledger,approved,,L-000093,2026-10-10
+2026-W35:2ab4d6bab7b6:e9,ledger,approved,,L-000094,2026-10-10
+2026-W35:8c0e98ebd184:e2,ledger,approved,,L-000095,2026-10-10
+2026-W35:8c0e98ebd184:e1,ledger,approved,,L-000096,2026-10-10
+2026-W35:8f949c495fcc:e10,ledger,approved,,L-000097,2026-10-10
+2026-W35:2ab4d6bab7b6:e20,ledger,approved,,L-000098,2026-10-10
+2026-W35:2ab4d6bab7b6:e19,ledger,approved,,L-000099,2026-10-10
+2026-W35:85a23d373323:e1,ledger,approved,,L-000100,2026-10-10
+2026-W35:29da1f67b1de:e4,ledger,approved,,L-000101,2026-10-10
+2026-W35:29da1f67b1de:e2,ledger,approved,,L-000102,2026-10-10
+2026-W35:61fbd9729f6e:e3,ledger,approved,,L-000103,2026-10-10
+2026-W35:128baf108964:e1,ledger,approved,,L-000104,2026-10-10
+2026-W35:8f949c495fcc:e1,ledger,approved,,L-000105,2026-10-10
+2026-W35:8db30561f5a3:e15,ledger,approved,,L-000106,2026-10-10
+2026-W35:8db30561f5a3:e10,ledger,edited,,L-000107,2026-10-10
+2026-W35:2ab4d6bab7b6:e5,ledger,approved,,L-000108,2026-10-10
+2026-W35:8db30561f5a3:e6,ledger,approved,,L-000109,2026-10-10
+2026-W35:41d24d9503bc:e1,ledger,approved,,L-000110,2026-10-10
+2026-W35:f1e0a41b49a7:e1,ledger,approved,,L-000111,2026-10-10
+2026-W35:0bfdc2f4dc54:e1,ledger,approved,,L-000112,2026-10-10
+2026-W35:2ab4d6bab7b6:e21,ledger,approved,,L-000113,2026-10-10
+2026-W35:518c04def962:e1,ledger,approved,,L-000114,2026-10-10
+2026-W35:473918cac704:e2,ledger,approved,,L-000115,2026-10-10
+2026-W35:bd3536ba140a:e4,ledger,approved,,L-000116,2026-10-10
+2026-W35:c65725a98934:e1,ledger,approved,,L-000117,2026-10-10
+2026-W35:4b1ae5b7c452:e1,ledger,approved,,L-000118,2026-10-10
+2026-W35:eadba62863ae:e1,ledger,approved,,L-000119,2026-10-10
+2026-W35:8db30561f5a3:e7,ledger,edited,,L-000120,2026-10-10
+2026-W35:128baf108964:e10,ledger,approved,,L-000121,2026-10-10
+2026-W35:f9229c867ba3:e1,ledger,approved,,L-000122,2026-10-10
+2026-W35:377340de95e8:e1,ledger,approved,,L-000123,2026-10-10
+2026-W35:518c04def962:e2,ledger,approved,,L-000124,2026-10-10
+2026-W35:473918cac704:e1,ledger,approved,,L-000125,2026-10-10
+2026-W35:377340de95e8:e2,ledger,approved,,L-000126,2026-10-10
+2026-W35:08bce1d37f10:e1,ledger,edited,,L-000127,2026-10-10
+2026-W35:a0886c21e11a:e1,ledger,approved,,L-000128,2026-10-10
+2026-W35:aa2ff8d9da0d:e1,ledger,approved,,L-000129,2026-10-10
+2026-W35:699569b05ff0:e4,ledger,approved,,L-000130,2026-10-10
+2026-W35:2ab4d6bab7b6:e4,ledger,approved,,L-000131,2026-10-10
+2026-W35:e3fcf2e6c74a:e7,ledger,approved,,L-000132,2026-10-10
+2026-W35:8db30561f5a3:e1,ledger,approved,,L-000133,2026-10-10
+2026-W35:628f9f780b7f:e1,ledger,approved,,L-000134,2026-10-10
+2026-W35:88b1971a26a2:e4,ledger,approved,,L-000135,2026-10-10
+2026-W35:ebf478c7b217:e1,ledger,approved,,L-000136,2026-10-10
+2026-W35:29da1f67b1de:e3,ledger,approved,,L-000137,2026-10-10
+2026-W35:2ab4d6bab7b6:e23,ledger,approved,,L-000138,2026-10-10
+2026-W35:0a82735b5338:e1,ledger,approved,,L-000139,2026-10-10
+2026-W35:24007445ed6e:e1,ledger,approved,,L-000140,2026-10-10
+2026-W35:882965d68825:e1,ledger,approved,,L-000141,2026-10-10
+2026-W35:61fbd9729f6e:e1,ledger,approved,,L-000142,2026-10-10
+2026-W35:77adb142bbe8:e2,ledger,approved,,L-000143,2026-10-10
+2026-W35:0aa5bb0486ef:e2,ledger,approved,,L-000144,2026-10-10
+2026-W35:77adb142bbe8:e1,ledger,approved,,L-000145,2026-10-10
+2026-W35:0aa5bb0486ef:e1,ledger,approved,,L-000146,2026-10-10
+2026-W35:2ab4d6bab7b6:e14,ledger,approved,,L-000147,2026-10-10
+2026-W35:8db30561f5a3:e5,ledger,edited,,L-000148,2026-10-10
+2026-W35:2ab4d6bab7b6:e13,ledger,approved,,L-000149,2026-10-10
+2026-W35:8db30561f5a3:e4,ledger,edited,,L-000150,2026-10-10
+2026-W35:e3fcf2e6c74a:e9,ledger,approved,,L-000151,2026-10-10
+2026-W35:435cbffd0990:e3,ledger,approved,,L-000152,2026-10-10
+2026-W35:435cbffd0990:e2,ledger,approved,,L-000153,2026-10-10
+2026-W35:518c04def962:e6,ledger,approved,,L-000154,2026-10-10
+2026-W35:0bcaf3b21f63:e1,ledger,approved,,L-000155,2026-10-10
+2026-W35:699569b05ff0:e3,ledger,edited,,L-000156,2026-10-10
+2026-W35:699569b05ff0:e1,ledger,approved,,L-000157,2026-10-10
+2026-W35:518c04def962:e5,ledger,approved,,L-000158,2026-10-10
+2026-W35:141a3a1b0579:e1,ledger,approved,,L-000159,2026-10-10
+2026-W35:ae70eef4d826:e1,ledger,approved,,L-000160,2026-10-10
+2026-W35:5d35a4ce8a75:e1,ledger,approved,,L-000161,2026-10-10
+2026-W35:bd3536ba140a:e1,ledger,approved,,L-000162,2026-10-10
+2026-W35:4b727cbbc6d7:e1,ledger,approved,,L-000163,2026-10-10
+2026-W35:771f2e2b95fe:e1,ledger,approved,,L-000164,2026-10-10
+2026-W35:8a61ff11af55:e1,ledger,approved,,L-000165,2026-10-10
+2026-W35:29da1f67b1de:e5,ledger,approved,,L-000166,2026-10-10
+2026-W35:8db30561f5a3:e14,ledger,approved,,L-000167,2026-10-10
+2026-W35:47af54b07e11:e1,ledger,approved,,L-000168,2026-10-10
+2026-W35:8db30561f5a3:e9,ledger,edited,,L-000169,2026-10-10
+2026-W35:b6810aa47dcc:e1,ledger,approved,,L-000170,2026-10-10
+2026-W35:2ab4d6bab7b6:e10,ledger,approved,,L-000171,2026-10-10
+2026-W35:f283e23fc135:e1,ledger,approved,,L-000172,2026-10-10
+2026-W35:8db30561f5a3:e2,ledger,edited,,L-000173,2026-10-10
+2026-W35:8f949c495fcc:e9,ledger,approved,,L-000174,2026-10-10
+2026-W35:128baf108964:e9,ledger,approved,,L-000175,2026-10-10
+2026-W35:29fd537001dc:e1,ledger,approved,,L-000176,2026-10-10
+2026-W35:bd3536ba140a:e5,ledger,approved,,L-000177,2026-10-10
+2026-W35:2ab4d6bab7b6:e16,ledger,approved,,L-000178,2026-10-10
+2026-W35:699569b05ff0:e2,ledger,approved,,L-000179,2026-10-10
+2026-W35:128baf108964:e5,ledger,approved,,L-000180,2026-10-10
+2026-W35:8f949c495fcc:e5,ledger,approved,,L-000181,2026-10-10
+2026-W35:2ab4d6bab7b6:e8,ledger,approved,,L-000182,2026-10-10
+2026-W35:28b4d2e06a84:e1,ledger,approved,,L-000183,2026-10-10
+2026-W35:8db30561f5a3:e12,ledger,edited,,L-000184,2026-10-10
+2026-W35:518c04def962:e3,ledger,approved,,L-000185,2026-10-10
+2026-W35:518c04def962:e7,ledger,approved,,L-000186,2026-10-10
+2026-W35:8db30561f5a3:e3,ledger,approved,,L-000187,2026-10-10
+2026-W35:0badc193714e:e2,ledger,approved,,L-000188,2026-10-10
+2026-W35:29da1f67b1de:e7,ledger,approved,,L-000189,2026-10-10
+2026-W35:0badc193714e:e1,ledger,approved,,L-000190,2026-10-10
+2026-W35:128baf108964:e2,ledger,approved,,L-000191,2026-10-10
+2026-W35:8f949c495fcc:e3,ledger,approved,,L-000192,2026-10-10
+2026-W35:29da1f67b1de:e6,ledger,approved,,L-000193,2026-10-10
+2026-W35:b8695e884a09:e1,ledger,approved,,L-000194,2026-10-10
+2026-W35:47af54b07e11:e2,ledger,edited,,L-000195,2026-10-10
+2026-W35:8db30561f5a3:e11,ledger,edited,,L-000196,2026-10-10
+2026-W35:18e0f7601fdf:e1,ledger,approved,,L-000197,2026-10-10
+2026-W35:2ab4d6bab7b6:e22,ledger,approved,,L-000198,2026-10-10
+2026-W35:8db30561f5a3:e13,ledger,edited,,L-000199,2026-10-10
+2026-W35:9066274b526a:e2,ledger,edited,,L-000200,2026-10-10
+2026-W35:9066274b526a:e1,ledger,approved,,L-000201,2026-10-10
+2026-W35:08bce1d37f10:e2,ledger,approved,,L-000202,2026-10-10
+2026-W35:61fbd9729f6e:e6,ledger,approved,,L-000203,2026-10-10
+2026-W35:ac518a703d19:e2,ledger,edited,,L-000204,2026-10-10
+2026-W35:ac518a703d19:e1,ledger,approved,,L-000205,2026-10-10
+2026-W35:61fbd9729f6e:e4,ledger,approved,,L-000206,2026-10-10
+2026-W35:f948e782f627:e1,ledger,approved,,L-000207,2026-10-10
+2026-W35:61fbd9729f6e:e2,ledger,approved,,L-000208,2026-10-10
+2026-W35:435cbffd0990:e9,ledger,approved,,L-000209,2026-10-10
+2026-W35:128baf108964:e3,ledger,approved,,L-000210,2026-10-10
+2026-W35:2ab4d6bab7b6:e25,ledger,approved,,L-000211,2026-10-10
+2026-W35:699569b05ff0:e5,ledger,approved,,L-000212,2026-10-10
+2026-W35:3c4f66629333:e1,ledger,approved,,L-000213,2026-10-10
+2026-W35:2ab4d6bab7b6:e2,ledger,approved,,L-000214,2026-10-10
+2026-W35:e3fcf2e6c74a:e5,ledger,approved,,L-000215,2026-10-10
+2026-W35:2ab4d6bab7b6:e1,ledger,approved,,L-000216,2026-10-10
+2026-W35:a82d3544909a:e1,ledger,approved,,L-000217,2026-10-10
+2026-W35:d0d707e7fbbe:e1,ledger,approved,,L-000218,2026-10-10
+2026-W35:345bc6c61f51:e1,ledger,approved,,L-000219,2026-10-10
+2026-W35:34b4237eb0e9:e1,ledger,approved,,L-000220,2026-10-10
+2026-W35:d225013fa1c6:e1,ledger,approved,,L-000221,2026-10-10
+2026-W35:2ab4d6bab7b6:e11,ledger,approved,,L-000222,2026-10-10
+2026-W35:3227950b0f1a:e1,ledger,approved,,L-000223,2026-10-10
+2026-W35:3a01dbee9643:e1,ledger,approved,,L-000224,2026-10-10
+2026-W35:dfe71817202a:e1,ledger,approved,,L-000225,2026-10-10
+2026-W35:236bc147da74:e1,ledger,approved,,L-000226,2026-10-10
+2026-W35:435cbffd0990:e7,ledger,approved,,L-000227,2026-10-10
+2026-W35:628f9f780b7f:e3,ledger,approved,,L-000228,2026-10-10
+2026-W35:bd0305ddc303:e3,ledger,approved,,L-000229,2026-10-10
+2026-W35:88b1971a26a2:e2,ledger,approved,,L-000230,2026-10-10
+2026-W35:0aa5bb0486ef:e7,ledger,approved,,L-000231,2026-10-10
+2026-W35:61e445d85ece:e1,ledger,approved,,L-000232,2026-10-10
+2026-W35:628f9f780b7f:e2,ledger,approved,,L-000233,2026-10-10
+2026-W35:88b1971a26a2:e1,ledger,approved,,L-000234,2026-10-10
+2026-W35:e3fcf2e6c74a:e4,ledger,approved,,L-000235,2026-10-10
+2026-W35:bd0305ddc303:e6,ledger,approved,,L-000236,2026-10-10
+2026-W35:0aa5bb0486ef:e5,ledger,approved,,L-000237,2026-10-10
+2026-W35:e3fcf2e6c74a:e8,ledger,approved,,L-000238,2026-10-10
+2026-W35:bd0305ddc303:e2,ledger,approved,,L-000239,2026-10-10
+2026-W35:435cbffd0990:e6,ledger,approved,,L-000240,2026-10-10
+2026-W35:0aa5bb0486ef:e3,ledger,approved,,L-000241,2026-10-10
+2026-W35:0f157142cfa7:e1,ledger,approved,,L-000242,2026-10-10
+2026-W35:23daa8030508:e1,ledger,approved,,L-000243,2026-10-10
+2026-W35:be5b60cd2965:e1,ledger,approved,,L-000244,2026-10-10
+2026-W35:43677ccb1a8c:e4,ledger,approved,,L-000245,2026-10-10
+2026-W35:786847125946:e1,ledger,approved,,L-000246,2026-10-10
+2026-W35:423cd955dffa:e1,ledger,approved,,L-000247,2026-10-10
+2026-W35:fd3228830b28:e1,ledger,approved,,L-000248,2026-10-10
+2026-W35:d4f867c031df:e1,ledger,approved,,L-000249,2026-10-10
+2026-W35:dc91fd806af8:e1,ledger,approved,,L-000250,2026-10-10
+2026-W35:2ab4d6bab7b6:e12,ledger,approved,,L-000251,2026-10-10
+2026-W35:e3fcf2e6c74a:e10,ledger,approved,,L-000252,2026-10-10
+check:L-000042,check,merged,"Same Maha Jodi Rs 200,000 gift; the 100,000 each is per donor.",L-000041,2026-10-10
+check:L-000046,check,place_changed,"ADB budgetary support grant to government, no place named.",L-000046,2026-10-10
+check:L-000050,check,merged,"Same Agricultural Development Bank Rs 30 million, reported again.",L-000049,2026-10-10
+check:L-000053,check,place_changed,"UAE aid for flood victims; Rasuwa is the event name, no place.",L-000053,2026-10-10
+check:L-000054,check,place_changed,"Same UAE USD 10 million, English report. [repeat re-matched within the same place: none]",L-000054,2026-10-10
+check:L-000055,check,place_changed,"Same UAE USD 10 million cash contribution, reported again. [repeat re-matched within the same place: none]",L-000055,2026-10-10
+check:L-000056,check,place_changed,"Same UAE USD 10 million cash contribution, reported again. [repeat re-matched within the same place: none]",L-000056,2026-10-10
+check:L-000057,check,place_changed,"Syangja is the donor's home; recipients are flood-affected people, no place.",L-000057,2026-10-10
+check:L-000059,check,merged,"Same NIC Asia Rs 22.1 million, another article.",L-000058,2026-10-10
+check:L-000061,check,place_changed,"ADB USD 150,000 technical aid for needs assessment, no place.",L-000061,2026-10-10
+check:L-000064,check,place_changed,"Same ADB USD 5 million grant, reported again. [repeat re-matched within the same place: none]",L-000064,2026-10-10
+check:L-000062,check,merged,"Same ADB USD 150,000 technical aid, English report.",L-000061,2026-10-10
+check:L-000065,check,merged,"Same ADB USD 5 million grant, English report. [repeat re-matched within the same place: L-000064]",L-000064,2026-10-10
+check:L-000063,check,merged,"Same ADB 150,000 dollar technical assistance, reported again.",L-000061,2026-10-10
+check:L-000066,check,merged,"Same ADB USD 5 million grant, reported again. [repeat re-matched within the same place: L-000064]",L-000064,2026-10-10
+check:L-000067,check,place_changed,"Combined ADB 5M plus 150k total, not a new gift; no place.",L-000067,2026-10-10
+check:L-000070,check,place_changed,Same IPPAN gift and article; the 50 thousand was dropped. [repeat re-matched within the same place: none],L-000070,2026-10-10
+check:L-000072,check,place_changed,Same 1 million Australian cash aid; currency label differs. [repeat re-matched within the same place: none],L-000072,2026-10-10
+check:L-000073,check,place_changed,"Australian AUD 5 million humanitarian aid, no place named.",L-000073,2026-10-10
+check:L-000075,check,place_changed,"Same Australian AUD 5 million, English report. [repeat re-matched within the same place: none]",L-000075,2026-10-10
+check:L-000074,check,place_changed,Same 1 million Australian cash support; currency label differs. [repeat re-matched within the same place: none],L-000074,2026-10-10
+check:L-000080,check,merged,Same NDRRMA Rs 67.5 million for 15 local levels.,L-000079,2026-10-10
+check:L-000007,check,place_changed,"Rs 25,000 per deceased family funeral grant; no place named.",L-000007,2026-10-10
+check:L-000083,check,merged,"Same Rs 25,000 per family funeral grant, another article.",L-000007,2026-10-10
+check:L-000084,check,merged,Dhading half of the same Rs 5 million each gift. [already one entry per place: not split again],L-000005,2026-10-10
+check:L-000085,check,merged,Chitwan half of the same Rs 5 million each gift. [already one entry per place: not split again] [repeat re-matched withi,L-000006,2026-10-10
+check:L-000086,check,merged,"Same Rs 20 million for Rasuwa and Nuwakot funds, another article.",L-000004,2026-10-10
+check:L-000087,check,merged,"Same Rs 30 million total over four districts, another article.",L-000003,2026-10-10
+check:L-000089,check,merged,"Same Rastriya Banijya Bank Rs 30 million, another article.",L-000088,2026-10-10
+check:L-000100,check,merged,Same Rs 5 million (50 lakh) Muktinath gift to PM fund.,L-000099,2026-10-10
+check:L-000119,check,merged,Same 15 crore Chaudhary-Nabil programme for Rasuwa and Nuwakot.,L-000118,2026-10-10
+check:L-000125,check,merged,Same USD 229 million combined pledge to government relief fund.,L-000124,2026-10-10
+check:L-000166,check,merged,"Same Global IME Bank 5 crore to PM fund, live blog.",L-000009,2026-10-10
+check:L-000181,check,merged,"Same NIFRA Rs 25 million to PM fund, other article.",L-000180,2026-10-10
+check:L-000191,check,merged,Same Kumari Bank Rs 30 million (3 crore) to PM fund.,L-000189,2026-10-10
+check:L-000193,check,place_changed,No place named; total is 3 crore fund plus 39 lakh drones (overlaps).,L-000193,2026-10-10
+check:L-000192,check,merged,Same Kumari Bank Rs 30 million to PM fund. [repeat re-matched within the same place: L-000190],L-000190,2026-10-10
+check:L-000215,check,merged,Same Prime Bank Rs 31 million to PM fund.,L-000214,2026-10-10
+check:L-000242,check,place_changed,"World Bank Rs 25 billion emergency aid to government, no place named.",L-000242,2026-10-10
+check:L-000243,check,merged,Same World Bank Rs 25 billion emergency assistance.,L-000242,2026-10-10
+check:L-000244,check,merged,Same World Bank Rs 25 billion pledge to Finance Minister.,L-000242,2026-10-10
+check:L-000245,check,merged,"Same World Bank Rs 25 billion, Nepali report.",L-000242,2026-10-10
+check:L-000247,check,merged,"Same World Bank Rs 25 billion secured, no place named.",L-000242,2026-10-10
+check:L-000248,check,merged,"Same World Bank Rs 25 billion, no place named.",L-000242,2026-10-10
+check:L-000010,check,merged,"Same World Bank Rs 25 billion, no place named.",L-000242,2026-10-10
+check:L-000249,check,merged,"Same World Bank Rs 25 billion pledge, no place named.",L-000242,2026-10-10
+check:L-000239,check,place_changed,"Same World Bank USD 167 million loan, no place named. [repeat re-matched within the same place: none]",L-000239,2026-10-10
+check:L-000241,check,merged,"Same World Bank USD 167 million loan, no place named.",L-000240,2026-10-10
+check:L-000250,check,merged,"Same World Bank Rs 25 billion commitment, no place named.",L-000242,2026-10-10
+check:L-000092,check,place_changed,"Syangja donor location is not the place; victims, no place named.",L-000092,2026-10-10
+check:L-000093,check,place_changed,"Bhirkot municipality's own 5 lakh; donor location, no recipient place.",L-000093,2026-10-10
+check:L-000105,check,merged,Same Gorkha Brewery Rs 100 million to PM fund.,L-000104,2026-10-10
+check:L-000106,check,merged,Same Gorkha Brewery 10 crore (Rs 100 million) to relief fund.,L-000104,2026-10-10
+check:L-000109,check,merged,Same Himalayan Bullion 1 crore 1 lakh (Rs 10.1 million) to PM fund.,L-000108,2026-10-10
+check:L-000110,check,place_changed,UK 5 million pounds for rescue and relief; no place named.,L-000110,2026-10-10
+check:L-000115,check,merged,Same UN CERF USD 2.5 million release reported again.,L-000114,2026-10-10
+check:L-000116,check,place_changed,Syangja is the donor; relief and rescue with no place named.,L-000116,2026-10-10
+check:L-000117,check,place_changed,"Tanahu is the donor; flood victims, no listed place named.",L-000117,2026-10-10
+check:L-000132,check,merged,"Same Nepal Life Insurance Rs 25.1 million gift, other article.",L-000131,2026-10-10
+check:L-000135,check,merged,"Same Nepali Congress Rs 10 million gift, other briefing.",L-000134,2026-10-10
+check:L-000137,check,place_changed,Cooperative donation with no recipient or place named.,L-000137,2026-10-10
+check:L-000139,check,place_changed,IFRC funds for Nepal Red Cross flood response; no place named.,L-000139,2026-10-10
+check:L-000144,check,merged,Same USD 2.1 million fund balance reported by another article.,L-000143,2026-10-10
+check:L-000146,check,merged,Same Rs 5.24 billion fund balance reported by another article.,L-000145,2026-10-10
+check:L-000148,check,merged,"Same Himalayan Distillery 1 crore gift, Nepali article.",L-000147,2026-10-10
+check:L-000150,check,merged,"Same Jawalakhel Distillery 1 crore gift, Nepali article.",L-000149,2026-10-10
+check:L-000151,check,merged,"Same Jawalakhel Distillery Rs 10 million gift, another briefing.",L-000149,2026-10-10
+check:L-000155,check,place_changed,"Sandhikharka is the donor; general flood relief fund, no place named.",L-000155,2026-10-10
+check:L-000160,check,merged,"Same Tilganga 1 crore gift, second article.",L-000159,2026-10-10
+check:L-000164,check,merged,"Same Gandaki Rs 40 million gift, English article.",L-000163,2026-10-10
+check:L-000165,check,merged,Same Gandaki 4 crore gift to the Prime Minister's fund.,L-000163,2026-10-10
+check:L-000013,check,merged,"Same Rs 5 million Dhading release, reported in English.",L-000012,2026-10-10
+check:L-000014,check,merged,"Same 50 lakh Dhading release, reported in another article.",L-000012,2026-10-10
+check:L-000022,check,merged,Rasuwa's Rs 10 million share of the same government release.,L-000020,2026-10-10
+check:L-000023,check,merged,Nuwakot's Rs 10 million share of the same government release. [repeat re-matched within the same place: L-000021],L-000021,2026-10-10
+check:L-000024,check,merged,"Same 1 crore each to Rasuwa and Nuwakot, another article. [already one entry per place: not split again]",L-000020,2026-10-10
+check:L-000025,check,merged,"Same 1 crore each to Rasuwa and Nuwakot, another article. [already one entry per place: not split again] [repeat re-matc",L-000021,2026-10-10
+check:L-000015,check,merged,"Same Rs 5 million Dhading release, reported by nepalnews.",L-000012,2026-10-10
+check:L-000016,check,merged,"Same Rs 5 million for Dhading flood victims, another article.",L-000012,2026-10-10
+check:L-000026,check,merged,Rasuwa's Rs 10 million share of the same government release.,L-000020,2026-10-10
+check:L-000027,check,merged,Nuwakot's Rs 10 million share of the same government release. [repeat re-matched within the same place: L-000021],L-000021,2026-10-10
+check:L-000028,check,merged,Rasuwa's Rs 10 million share of the same government release.,L-000020,2026-10-10
+check:L-000029,check,merged,Nuwakot's Rs 10 million share of the same government release. [repeat re-matched within the same place: L-000021],L-000021,2026-10-10
+check:L-000017,check,merged,"Same Rs 5 million Dhading grant, reported again.",L-000012,2026-10-10
+check:L-000018,check,merged,"Same Rs 5 million Dhading grant, reported again.",L-000012,2026-10-10
+check:L-000030,check,merged,Rs 10 million each to Rasuwa and Nuwakot; same government release. [already one entry per place: not split again],L-000020,2026-10-10
+check:L-000031,check,merged,Rs 10 million each to Rasuwa and Nuwakot; same government release. [already one entry per place: not split again] [repea,L-000021,2026-10-10
+check:L-000032,check,merged,Rs 10 million each to Rasuwa and Nuwakot; same government release. [already one entry per place: not split again],L-000020,2026-10-10
+check:L-000033,check,merged,Rs 10 million each to Rasuwa and Nuwakot; same government release. [already one entry per place: not split again] [repea,L-000021,2026-10-10
+check:L-000002,check,merged,"Same Rs 67.5 million for flood-hit local governments, reported again.",L-000038,2026-10-10
+check:L-000019,check,merged,"Same Rs 5 million Dhading cash relief, reported again.",L-000012,2026-10-10
+check:L-000034,check,merged,Rs 10 million each to Rasuwa and Nuwakot; same government release. [already one entry per place: not split again],L-000020,2026-10-10
+check:L-000035,check,merged,Rs 10 million each to Rasuwa and Nuwakot; same government release. [already one entry per place: not split again] [repea,L-000021,2026-10-10
+check:L-000039,check,merged,"Same Rs 67.5 million for 15 local units, reported again.",L-000038,2026-10-10
+check:L-000229,check,place_changed,Foreign aid to Nepal for flood relief; no place named.,L-000229,2026-10-10
+check:L-000195,check,merged,"Same Lahan 11 lakh gift to national fund, reported again.",L-000194,2026-10-10
+check:L-000199,check,merged,"Same Silver Lining gift (Rs 111,000 rounded), reported in Nepali.",L-000198,2026-10-10
+check:L-000204,check,place_changed,For two missing Doti men's families; Doti is not a listed place.,L-000204,2026-10-10
+check:L-000206,check,merged,"Same Sayal gift of 1,11,111 to PM fund, reported again.",L-000205,2026-10-10
+check:L-000001,check,merged,"Ncell Rs 1 crore (10 million) to PM fund, same gift.",L-000210,2026-10-10
+check:L-000252,check,merged,"Same WWF Nepal Rs 10 million gift, reported in briefing.",L-000251,2026-10-10
+check:L-000011,check,place_changed,RSP Rs 5 million for rescue and relief; no place named.,L-000011,2026-10-10
+check:L-000219,check,merged,"Same Rimal Rs 100,000 gift, English report.",L-000218,2026-10-10
+check:L-000221,check,merged,"Same Raut gift (Rs 1.1 million = 11 lakh), English report.",L-000220,2026-10-10
+check:L-000224,check,merged,"Same students' Rs 470 gift, Nepali report.",L-000223,2026-10-10
+check:L-000226,check,place_changed,"US $500,000 via Catholic Relief Services; no place named.",L-000226,2026-10-10
+check:L-000227,check,merged,"Same US USD 500,000 emergency aid, no place named.",L-000226,2026-10-10
+check:L-000230,check,merged,"Earlier US USD 500,000 package; border communities and Rasuwa, no split. [repeat re-matched within the same place: L-000",L-000228,2026-10-10
+check:L-000231,check,merged,"Same US USD 500,000 aid; no place named.",L-000226,2026-10-10
+check:L-000232,check,place_changed,US $3.6 million for Nepal's flood victims; no place named.,L-000232,2026-10-10
+check:L-000233,check,merged,Same US USD 3.6 million additional aid for Nepal.,L-000232,2026-10-10
+check:L-000234,check,merged,Same US USD 3.6 million additional aid for Nepal.,L-000232,2026-10-10
+check:L-000236,check,place_changed,Same Swiss CHF 1 million spent via UN; no place. [repeat re-matched within the same place: none],L-000236,2026-10-10
+check:L-000237,check,place_changed,Same Swiss CHF 1 million via UN; no place named. [repeat re-matched within the same place: none],L-000237,2026-10-10
+check:x-01,check,merged,"ADB US$5M grant again; the Nepali 'मिलियन' was misread as US$5, merging keeps L-000064's correct amount",L-000064,2026-10-10
+check:x-02,check,merged,"Australia US$1M again; 'मिलियन' was misread as US$1, merging keeps L-000071's correct amount",L-000071,2026-10-10
+check:x-03,check,merged,"UK £5M again; 'मिलियन' was misread as £5, merging keeps L-000185's correct amount",L-000185,2026-10-10
+check:x-04,check,merged,"Switzerland CHF 1M again; 'मिलियन' was misread as CHF 1, merging keeps L-000237's correct amount",L-000237,2026-10-10
+check:x-05,check,merged,"World Bank US$167M again; 'मिलियन' was misread as US$167, merging keeps L-000240's correct amount",L-000240,2026-10-10
+check:x-06,check,merged,"Kumari Bank's Rs 3 crore to the PM's fund, same day; only the donor name differs ('Limited')",L-000189,2026-10-10
+check:x-07,check,merged,Australia's 5 million Australian dollars: the English version of the same OnlineKhabar story,L-000073,2026-10-10
+check:x-08,check,merged,World Bank's 'up to Rs 25 billion' again (another article); same amount and donor,L-000242,2026-10-10
+check:x-09,check,merged,"JUDGEMENT CALL: Australia's 1 million again, but sources disagree on the currency (L-000071 says USD, this says AUD). Me",L-000071,2026-10-10
+check:x-10,check,removed,"Bagmati's Rs 30M is the total of Rs 20M (Rasuwa+Nuwakot) + Rs 5M Dhading + Rs 5M Chitwan, all already entries",L-000003,2026-10-10
+check:x-11,check,removed,"ADB's US$5.15M is the US$5M grant + US$150,000 technical aid, both already entries",L-000067,2026-10-10
+check:x-12,check,removed,"Kamana Bank's Rs 2.5M is Rs 10 lakh (bank) + Rs 15 lakh (staff), both already entries",L-000097,2026-10-10
+check:x-13,check,removed,"Kumari Bank's Rs 3.39 crore is Rs 3 crore to the PM's fund + Rs 39 lakh of equipment, both already entries",L-000193,2026-10-10
+check:x-14,check,removed,"JUDGEMENT CALL: US$229M is a combined figure for the World Bank, India, China and the US; it double-counts the World Ban",L-000124,2026-10-10
+check:x-15,check,linked,JUDGEMENT CALL: the World Bank's 'up to Rs 25 billion' (26 Aug) looks like the same money as its US$167M loan (about Rs ,L-000242,2026-10-10
+2026-W35:141a3a1b0579:o1,org,approved,,O-tilganga-eye-foundation,2026-10-10
+2026-W35:141a3a1b0579:o2,org,approved,,O-tilganga-eye-foundation,2026-10-10
+2026-W35:141a3a1b0579:o3,org,approved,,O-tilganga-eye-foundation,2026-10-10
+2026-W35:4b1ae5b7c452:o1,org,approved,,O-chaudhary-foundation,2026-10-10
+2026-W35:4b1ae5b7c452:o2,org,approved,,O-chaudhary-foundation,2026-10-10
+2026-W35:76b9f2b7c695:o1,org,approved,,O-world-health-organization,2026-10-10
+2026-W35:ae70eef4d826:o1,org,approved,,O-tilganga-eye-foundation,2026-10-10
+2026-W35:ae70eef4d826:o2,org,approved,,O-tilganga-eye-foundation,2026-10-10
+2026-W35:ae70eef4d826:o3,org,approved,,O-tilganga-eye-foundation,2026-10-10
+2026-W35:c65725a98934:o1,org,approved,,O-nepal-red-cross-society-tanahu-district-,2026-10-10
+2026-W35:eadba62863ae:o1,org,approved,,O-chaudhary-foundation,2026-10-10
+2026-W35:eadba62863ae:o2,org,approved,,O-chaudhary-foundation,2026-10-10
+2026-W38:e492fafb2237:e3,ledger,edited,,L-000252,2026-10-14
+2026-W38:3537705d2039:e3,ledger,approved,,L-000253,2026-10-14
+2026-W40:40561872bb4d:e2,ledger,rejected,duplicate of an existing entry,,2026-10-14
+2026-W41:45f7fa6ef68a:e2,ledger,rejected,duplicate of an existing entry,,2026-10-14
+2026-W41:1187512ffca3:e2,ledger,rejected,duplicate of an existing entry,,2026-10-14
+2026-W38:e492fafb2237:e2,ledger,rejected,duplicate of an existing entry,,2026-10-14
+2026-W38:3537705d2039:e2,ledger,rejected,duplicate of an existing entry,,2026-10-14
+2026-W39:d3a1ca3b324f:e1,ledger,rejected,duplicate of an existing entry,,2026-10-14
+2026-W40:b1d9111af54a:e1,ledger,rejected,duplicate of an existing entry,,2026-10-14
